@@ -64,20 +64,24 @@ tar -zxvf openGauss-OM-6.0.0-CentOS7-x86_64.tar.gz
 </ROOT>
 
 ```
-# 部署安装
+# 部署安装环境
 ```
 ./gs_preinstall -U omm -G dbgrp -L -X /opt/software/openGauss/cluster_config.xml
 
 ```
 
+# 部署安装
+```
+
+```
 
 ## 报错
 1.Exception: [GAUSS-52200] : Unable to import module: /opt/software/openGauss/script/domain_utils/sql_handler/../../../lib/cryptography/hazmat/bindings/_openssl.abi3.so: symbol SSLv3_method, version OPENSSL_1_1_0 not defined in file libssl.so.1.1 with link time reference  
 解决 :下载指定版本的包替换  
 ```
-wget https://www.openssl.org/source/openssl-1.1.0l.tar.gz
-tar -xzf openssl-1.1.0l.tar.gz
-cd openssl-1.1.0l
+wget https://www.openssl.org/source/openssl-1.1.l.tar.gz
+tar -xzf openssl-1.1.l.tar.gz
+cd openssl-1.1.l
 ./config
 make
 sudo make install
