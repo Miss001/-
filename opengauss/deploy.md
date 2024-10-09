@@ -85,4 +85,7 @@ cd openssl-1.1.l
 ./config
 make
 sudo make install
+
+cp openssl-1.1.1/libssl.so.1.1  /usr/lib64/libssl.so.1.1
+cp openssl-1.1.1/libcrypto.so.1.1  /usr/lib64/libcrypto.so.1.1
 ```
