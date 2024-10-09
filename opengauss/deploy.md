@@ -2,12 +2,19 @@
 地址：https://opengauss.org/zh/download/  
 ![image](https://github.com/user-attachments/assets/3737459a-5d2c-42ea-880a-79a6b5870eae)
 
+# 安装依赖
+```
+yum install -y bzip2 libaio-devel flex bison ncurses-devel glibc-devel patch redhat-lsb-core readline-devel zlib-devel lz4-devel openSSL-devel libffi-devel kernel-devel gcc gcc-c++ python3 python3-devel
+
+```
+
 # 安装
 ```
 mkdir /opt/software/openGauss/
 tar -zxvf openGauss-All-6.0.0-CentOS7-x86_64.tar.gz
-tar -zxvf openGauss-OM-6.0.0-openEuler20.03-x86_64.tar.gz
+tar -zxvf openGauss-OM-6.0.0-CentOS7-x86_64.tar.gz
 ```
+
 # 创建cluster_config.xml 文件
 单节点配置
 ```
@@ -56,4 +63,22 @@ tar -zxvf openGauss-OM-6.0.0-openEuler20.03-x86_64.tar.gz
     </DEVICELIST>
 </ROOT>
 
+```
+# 部署安装
+```
+./gs_preinstall -U omm -G dbgrp -L -X /opt/software/openGauss/cluster_config.xml
+
+```
+
+
+## 报错
+1.Exception: [GAUSS-52200] : Unable to import module: /opt/software/openGauss/script/domain_utils/sql_handler/../../../lib/cryptography/hazmat/bindings/_openssl.abi3.so: symbol SSLv3_method, version OPENSSL_1_1_0 not defined in file libssl.so.1.1 with link time reference  
+解决 :下载指定版本的包替换  
+```
+wget https://www.openssl.org/source/openssl-1.1.0l.tar.gz
+tar -xzf openssl-1.1.0l.tar.gz
+cd openssl-1.1.0l
+./config
+make
+sudo make install
 ```
