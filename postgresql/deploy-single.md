@@ -36,6 +36,7 @@ sudo -i -u postgres
 ## 配置文件修改（navicate远程连接）
 vi pg_hba.conf
 ```
+# Allow replication connections from localhost, by a user with the
 host    all             all             0.0.0.0/0          md5
 ```
 vi postgresql.conf
