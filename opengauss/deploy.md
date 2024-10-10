@@ -143,3 +143,7 @@ gs_om -t status
 gsql -d postgres -p 15400
 
 ```
+## 退出连接
+```
+\q
+```
