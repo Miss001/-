@@ -32,9 +32,15 @@ sudo chown postgres:postgres /opt/postgresql/data
 sudo -i -u postgres
 /opt/postgresql/bin/initdb -D /opt/postgresql/data
 ```
-## 配置 postgresql.conf
-```
 
+## 配置文件修改（navicate远程连接）
+vi pg_hba.conf
+```
+host    all             all             0.0.0.0/0          md5
+```
+vi postgresql.conf
+```
+listen_address = '*'
 ```
 
 ## 启动数据库
