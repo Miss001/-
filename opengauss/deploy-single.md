@@ -142,8 +142,30 @@ gs_om -t status
 ```
 gsql -d postgres -p 15400
 
+create user root identified by 'root@123';
+alter user root sysadmin;
 ```
 ## 退出连接
 ```
 \q
 ```
+## 配置 navicate 远程连接
+vi postgresql.conf
+```
+listen_addresses = '*'
+password_encryption_type = 0
+```
+vi pg_hba.conf
+```
+# Allow replication connections from localhost, by a user with the
+host    all             all             0.0.0.0/0               md5
+```
+重启服务
+```
+gs_ctl restarted
+```
+密码需要重新更新才会生效
+```
+alter user root with password 'root@@123';
+```
+
