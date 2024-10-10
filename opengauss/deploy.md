@@ -2,6 +2,27 @@
 地址：https://opengauss.org/zh/download/  
 ![image](https://github.com/user-attachments/assets/3737459a-5d2c-42ea-880a-79a6b5870eae)
 
+# 环境配置
+```
+设置主机名
+hostnamectl set-hostname master
+
+```
+# 安装python环境
+```
+安装
+sh Miniconda3-latest-Linux-x86_64.sh
+
+添加环境变量
+export CONDA_HOME=/opt/miniconda3
+export PATH=${CONDA_HOME}/bin:$PATH
+
+创建python环境
+conda create --name myenv python=3.9
+source ~/.bashrc
+conda activate myenv
+```
+
 # 安装依赖
 ```
 yum install -y bzip2 libaio-devel flex bison ncurses-devel glibc-devel patch redhat-lsb-core readline-devel zlib-devel lz4-devel openSSL-devel libffi-devel kernel-devel gcc gcc-c++ python3 python3-devel
