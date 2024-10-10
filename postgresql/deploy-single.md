@@ -51,3 +51,10 @@ sudo chown postgres:postgres /opt/postgresql/log
 sudo -i -u postgres
 /opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log start
 ```
+
+## 修改密码
+```
+/opt/postgresql/bin/psql
+alter user postgres password 'root@@123';
+\q
+```
