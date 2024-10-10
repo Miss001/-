@@ -3,17 +3,17 @@
 python>=3.6 <=3.10 , --enable-shared编译
 
 
-# 下载
+## 下载
 地址：https://opengauss.org/zh/download/  
 ![image](https://github.com/user-attachments/assets/3737459a-5d2c-42ea-880a-79a6b5870eae)
 
-# 环境配置
+## 环境配置
 ```
 设置主机名
 hostnamectl set-hostname master
 
 ```
-# 安装python环境
+## 安装python环境
 ```
 安装
 sh Miniconda3-latest-Linux-x86_64.sh
@@ -39,12 +39,12 @@ source ~/.bashrc
 conda activate myenv
 ```
 
-# 安装依赖
+## 安装依赖
 ```
 yum install python3-devel
 ```
 
-# 安装
+## 安装
 ```
 解压
 mkdir /opt/openGausssource/
@@ -62,13 +62,13 @@ mkdir -p /opt/openGauss/install/om
 mkdir -p /opt/openGauss/corefile
 
 ```
-# 创建用户组
+## 创建用户组
 ```
 groupadd dbgrp
 useradd -g dbgrp omm
 ```
 
-# 创建cluster_config.xml 文件
+## 创建cluster_config.xml 文件
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <ROOT>
@@ -115,12 +115,12 @@ useradd -g dbgrp omm
 </ROOT>
 
 ```
-# 部署安装环境
+## 校验安装环境
 ```
 ./gs_preinstall -U omm -G dbgrp -L -X /opt/openGausssource/cluster_config.xml
 ```
 
-# 部署安装
+## 部署安装
 ```
 切换用户配置python环境
 su - omm
@@ -132,4 +132,14 @@ conda activate myenv
 gs_install -X /opt/openGausssource/cluster_config.xml
 密码
 opengauss@123
+```
+## 验证
+```
+gs_om -t status
+```
+
+## 连接
+```
+gsql -d postgres -p 15400
+
 ```
