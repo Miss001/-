@@ -42,9 +42,6 @@ conda activate myenv
 # 安装依赖
 ```
 yum install python3-devel
-
-yum install -y bzip2 libaio-devel flex bison ncurses-devel glibc-devel patch redhat-lsb-core readline-devel zlib-devel lz4-devel openSSL-devel libffi-devel kernel-devel gcc gcc-c++
-
 ```
 
 # 安装
@@ -121,10 +118,10 @@ useradd -g dbgrp omm
 # 部署安装环境
 ```
 ./gs_preinstall -U omm -G dbgrp -L -X /opt/openGausssource/cluster_config.xml
-
 ```
 
 # 部署安装
 ```
-
+su - omm
+gs_install -X /opt/openGausssource/cluster_config.xml
 ```
