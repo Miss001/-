@@ -32,9 +32,15 @@ sudo chown postgres:postgres /opt/postgresql/data
 sudo -i -u postgres
 /opt/postgresql/bin/initdb -D /opt/postgresql/data
 ```
+## 配置 postgresql.conf
+```
+
+```
+
 ## 启动数据库
 ```
-sudo mkdir -p /var/log/postgresql
-sudo chown postgres:postgres /var/log/postgresql
-/usr/local/pgsql/bin/pg_ctl -D /data/postgresql -l /var/log/postgresql/postgresql.log start
+sudo mkdir -p /opt/postgresql/log
+sudo chown postgres:postgres /opt/postgresql/log
+sudo -i -u postgres
+/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log start
 ```
