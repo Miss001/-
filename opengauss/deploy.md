@@ -122,6 +122,14 @@ useradd -g dbgrp omm
 
 # 部署安装
 ```
+切换用户配置python环境
 su - omm
+conda init
+source ~/.bashrc
+conda activate myenv
+
+安装
 gs_install -X /opt/openGausssource/cluster_config.xml
+密码
+opengauss@123
 ```
