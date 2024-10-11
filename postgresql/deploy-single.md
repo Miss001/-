@@ -33,22 +33,14 @@ sudo -i -u postgres
 /opt/postgresql/bin/initdb -D /opt/postgresql/data
 ```
 
-## 配置文件修改（navicate远程连接）
-vi pg_hba.conf
-```
-# Allow replication connections from localhost, by a user with the
-host    all             all             0.0.0.0/0          md5
-```
-vi postgresql.conf
-```
-listen_address = '*'
-```
-
 ## 启动数据库
 ```
+创建日志目录
 sudo mkdir -p /opt/postgresql/log
 sudo chown postgres:postgres /opt/postgresql/log
+切换用户
 sudo -i -u postgres
+启动
 /opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log start
 ```
 
@@ -57,4 +49,38 @@ sudo -i -u postgres
 /opt/postgresql/bin/psql
 alter user postgres password 'root@@123';
 \q
+```
+
+## 配置文件修改（navicate远程连接）
+vi pg_hba.conf
+```
+# Allow replication connections from localhost, by a user with the
+host    all             all             0.0.0.0/0          trust
+```
+vi postgresql.conf
+```
+listen_address = '*'
+```
+
+## 设置快捷脚本
+vi stop-postgres.sh
+```
+#! /bin/bash
+
+su postgres -c"/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log stop"
+
+```
+vi start-postgres.sh
+```
+#! /bin/bash
+
+su postgres -c"/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log start"
+
+```
+vi restart-postgres.sh
+```
+#! /bin/bash
+
+su postgres -c"/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log restart"
+
 ```
