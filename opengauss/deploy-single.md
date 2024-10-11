@@ -168,4 +168,3 @@ gs_ctl restarted
 ```
 alter user root with password 'root@@123';
 ```
-
