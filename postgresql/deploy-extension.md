@@ -1,8 +1,11 @@
+对于每一个新建数据库都需要安装扩展包
 ## 检查已安装的扩展包
 ```
 sudo -i -u postgres
 /opt/postgresql/bin/psql
 \dx
+或
+SELECT * FROM pg_available_extensions 
 ```
 
 ## 编译安装指定扩展包
