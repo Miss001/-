@@ -7,8 +7,7 @@
 ```
 sudo yum update -y
 sudo yum groupinstall -y "Development Tools"
-sudo yum install -y readline-devel zlib-devel libxml2-devel libxslt-devel gcc-c++ openssl-devel flex bison libcurl-devel libicu-devel
-
+sudo yum install -y readline-devel zlib-devel libxml2-devel libxslt-devel uuid-devel gcc-c++ openssl-devel flex bison libcurl-devel libicu-devel
 ```
 
 ## 编译
@@ -16,7 +15,7 @@ sudo yum install -y readline-devel zlib-devel libxml2-devel libxslt-devel gcc-c+
 sudo mkdir /opt/postgresql
 tar -xvf postgresql-17.0.tar.gz
 cd postgresql-17.0
-./configure --prefix=/opt/postgresql --without-icu --with-uuid=uuid  #若无icu 可增加 --without-icu
+./configure --prefix=/opt/postgresql --with-libxml --with-libxslt --with-uuid=ossp  #若无icu 可增加 --without-icu
 make
 sudo make install
 ```
@@ -54,35 +53,41 @@ alter user postgres password 'root@@123';
 ```
 
 ## 配置文件修改（navicate远程连接）
-vi pg_hba.conf
+vi /opt/postgresql/data/pg_hba.conf
 ```
 # Allow replication connections from localhost, by a user with the
 host    all             all             0.0.0.0/0          trust
 ```
-vi postgresql.conf
+vi /opt/postgresql/data/postgresql.conf
 ```
 listen_address = '*'
 ```
 
 ## 设置快捷脚本
-vi stop-postgres.sh
+vi /opt/postgresql/bin/stop-postgres.sh
 ```
 #! /bin/bash
 
 su postgres -c"/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log stop"
 
 ```
-vi start-postgres.sh
+vi /opt/postgresql/bin/start-postgres.sh
 ```
 #! /bin/bash
 
 su postgres -c"/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log start"
 
 ```
-vi restart-postgres.sh
+vi /opt/postgresql/bin/restart-postgres.sh
 ```
 #! /bin/bash
 
 su postgres -c"/opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log restart"
 
+```
+授权可执行权限
+```
+chmod u+x stop-postgres.sh 
+chmod u+x start-postgres.sh 
+chmod u+x restart-postgres.sh
 ```
