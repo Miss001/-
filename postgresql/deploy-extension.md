@@ -1,3 +1,4 @@
+# 内置扩展包安装
 对于每一个新建数据库都需要安装扩展包
 ## 检查已安装的扩展包
 ```
@@ -33,3 +34,5 @@ sudo -i -u postgres
 创建扩展方法
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
+
+## orafce 兼容扩展包安装
