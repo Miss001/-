@@ -25,7 +25,7 @@ mkdir -p /opt/oracle
 ```
 创建容器
 ```
-docker run  -it -d \
+docker run -it -d \
 -p 1521:1521 \
 --name oracle \
 -v /opt/oracle:/data/oracle \
