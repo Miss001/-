@@ -11,7 +11,7 @@
 | date_format                      | select to_char(current_timestamp,'yyyy-mm-dd hh24:mi:ss')    | select date_format(now(),'%Y-%m-%d %H:%s:%i')                |
 | timestampdiff                    | select round(extract(EPOCH  from now() - to_timestamp('2024-01-01 00:00:00','yyyy-mm-dd hh24:mi:ss'))) | select timestampdiff(SECOND,str_to_date('2024-01-01 00:00:00','%Y-%m-%d %H:%s:%i'),now()) |
 | interval                         | select now() + (1\|\|' day')::interval<br/>select now() + interval '1 DAY' | select  now() + interval 1 DAY                               |
-| 伪劣排序                         | Select ROW_NUMBER() OVER () as RowId From test               | Select (@i:=@i+1) As RowId<br/>From test a,<br/>     (SELECT @i := 0) b |
+| 伪劣排序                         | select row_number() over () as rowId from test               | select (@i:=@i+1) As rowId<br/>from test a,<br/>     (select @i := 0) b |
 | replace into                     | insert into test (id,content)<br/>select 1,'tx'<br/>ON CONFLICT (id)<br/>DO UPDATE SET content = EXCLUDED.content | replace into test(id,content)<br/>select 1,'tx'              |
 | insert … on duplicate key update | insert into test (id,content)<br/>select 1,'tx'<br/>ON CONFLICT (id)<br/>DO UPDATE SET content = EXCLUDED.content | INSERT INTO test (id, content) <br/>select * from(<br/>select 2 as id,'tx' as content<br/>)b<br/>ON DUPLICATE KEY <br/>UPDATE content=b.content |
 | insert ignore                    | insert into test (id,content)<br/>select 3 ,'tx'<br/>ON CONFLICT (id)<br/>DO NOTHING | INSERT IGNORE INTO test(id, content) <br/>select 3 as id,'tx' as content |
