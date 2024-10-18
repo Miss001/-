@@ -23,5 +23,5 @@
 | chr(0)                   | chr(0) 是作为结束符来处理的，不允许作为用户输入传入字符串中  | chr(0)代表空字符                                             |
 | NULL值与非NULL值字符拼接 | 结果为：NULL                                                 | 结果为：非NULL值                                             |
 | LISTAGG                  | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select string_agg(i::text,',' order by i)  from t  group by id | with<br/>t as(<br/>select 1 as i ,'a' as id from dual<br/>union ALL<br/>select null as i,'a' as id from dual<br/>union ALL<br/>select 2 as i,'b' as id from dual<br/>union ALL<br/>select 3 as i,'b' as id from dual<br/>)<br/>select listagg(i,',') within group (order by id) from t group by id |
-|                          |                                                              |                                                              |
+
 
