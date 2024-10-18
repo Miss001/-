@@ -1,4 +1,4 @@
-语法差异转换
+## 语法差异转换
 |                          | postgresql17                                                 | oracle11                                                     |
 | ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 递归查询                 | with recursive a as(<br/>  -- 第一个子句只执行一次。<br/>  select id,parent_id,username ,1 as recursion_level <br/>      from tmp3 where parent_id is NULL<br/>  union ALL<br/>  -- 第二个子句是迭代逻辑生效的地方<br/>  select b.id,b.parent_id,b.username, a.recursion_level +1<br/>      from tmp3 b join a on a.id=b.parent_id<br/>)<br/>select id,parent_id,username,recursion_level from a | select id, parent_id ,level as recursion_level<br/>from tmp3  start with parent_id IS NULL<br/>  connect by prior id = parent_id |
