@@ -2,7 +2,7 @@
 |                                  | postgresql11                                                 | mysql8                                                       |
 | -------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | group_concat                     | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select string_agg(i::text,',' order by i)  from t  group by id | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select group_concat(i SEPARATOR ',')  from t group by id |
-| 尾部空格字符串（' '）            | 读取为空格字符串（' '）                                      | 当字符集排序规则的Pad_attribute='PAD SPACE'时，<br/>识别为：空字符串('',like 除外<br/>当字符集排序规则的Pad_attribute='NO PAD'时，<br/>识别为：空格字符串（' '） |
+| 尾部空格字符串（' '）            | 读取为空格字符串（' '）                                      | 当字符集排序规则的Pad_attribute='PAD SPACE'时，<br/>识别为：空字符串（''）,like 除外<br/>当字符集排序规则的Pad_attribute='NO PAD'时，<br/>识别为：空格字符串（' '） |
 | uuid                             | select uuid_generate_v4()                                    | select uuid()                                                |
 | ifnull                           | select coalesce(null,1)                                      | select ifnull(null,1)                                        |
 | limit                            | select * from test limit 2 offset 0                          | select * from test limit 0,2                                 |
