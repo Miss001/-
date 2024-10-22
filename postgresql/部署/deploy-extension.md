@@ -37,9 +37,6 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 # orafce 兼容扩展包安装
 实现oracle函数的使用
 
-# pgstattuple  扩展包安装
-实现查询表和索引的元组级别统计信息
-
 # postgis 扩展包安装
 实现地理空间功能的使用
 - 依赖安装
