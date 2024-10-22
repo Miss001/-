@@ -35,3 +35,4 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
 ## orafce 兼容扩展包安装
+## pgstattuple  扩展包安装
