@@ -43,7 +43,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 # sudo yum install proj-devel geos-devel gdal-devel -y
 # 手动安装
-sudo yum install libxml2-devel libtiff libtiff-devel -y
+sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel  -y
 
 # 编译安装依赖
 1.sqlite
