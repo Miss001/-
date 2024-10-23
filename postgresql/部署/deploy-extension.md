@@ -43,8 +43,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 # sudo yum install proj-devel geos-devel gdal-devel -y
 # 手动安装
-sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel  -y
-yum -y install gcc g++ cmake zlib-devel 
+sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel  gcc g++ cmake zlib-devel protobuf-c-devel
+ -y
+export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 
 # 编译安装依赖
 1.sqlite
@@ -56,7 +57,6 @@ make
 make install
 echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf.d/sqlite3.conf
 sudo ldconfig
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 2.proj
 wget https://download.osgeo.org/proj/proj-8.2.0.tar.gz
@@ -73,7 +73,7 @@ tar -xvjf geos-3.9.1.tar.bz2
 cd geos-3.9.1
 ./configure --prefix=/usr/local  
 make 
-make install
+make install libxml2
 
 4.python3
 sh Miniconda3-latest-Linux-x86_64.sh
@@ -89,12 +89,37 @@ make
 make install
 ```
 
+5.protobuf 
+```
+wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz
+tar -xzf protobuf-28.3.tar.gz
+cd protobuf-28.3
+mkdir build
+cd build
+cmake ..              
+make          
+sudo make install
+sudo ldconfig
+```
+
+6.protobuf-c
+```
+wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.3.3/protobuf-c-1.3.3.tar.gz
+tar -xzf protobuf-c-1.3.3.tar.gz
+cd protobuf-c-1.3.3
+./configure  --prefix=/usr/local
+make 
+make install
+```
+
 - 源码编译
 ```
+export PATH="/usr/bin:$PATH"
+
 wget https://download.osgeo.org/postgis/source/postgis-3.3.0.tar.gz
 tar -xvzf postgis-3.3.0.tar.gz
 cd postgis-3.3.0
-./configure --with-pgconfig=/usr/pgsql-17/bin/pg_config --with-geosconfig=/usr/bin/geos-config --with-projdir=/usr --with-gdalconfig=/usr/bin/gdal-config
+./configure --with-pgconfig=/opt/postgresql/bin/pg_config --without-protobuf
 make 
 make install
 ```
