@@ -43,9 +43,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel zlib-devel gcc g++ -y
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-
-# 编译安装依赖
-1.cmake
+```
+- 1.cmake
 ```
 wget https://cmake.org/files/v3.15/cmake-3.15.0.tar.gz
 tar -zxvf cmake-3.15.0.tar.gz
@@ -55,7 +54,7 @@ make
 sudo make install
 ```
 
-2.sqlite
+- 2.sqlite
 ```
 wget https://www.sqlite.org/2024/sqlite-autoconf-3470000.tar.gz
 tar -zxvf sqlite-autoconf-3470000.tar.gz
@@ -67,7 +66,8 @@ echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf.d/sqlite3.conf
 sudo ldconfig
 ```
 
-3.proj
+- 3.proj
+```
 wget https://download.osgeo.org/proj/proj-8.2.0.tar.gz
 tar -zxvf proj-8.2.0.tar.gz
 cd proj-8.2.0
@@ -75,23 +75,27 @@ cd proj-8.2.0
 make 
 make install
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+```
 
-4.geos
+- 4.geos
+```
 wget https://github.com/libgeos/geos/releases/download/3.13.0/geos-3.13.0.tar.bz2
 tar -xvjf geos-3.13.0.tar.bz2
 cd geos-3.13.0
 ./configure --prefix=/usr/local  
 make 
 make install libxml2
+```
 
-4.python3
+- 4.python3
 ```
 sh Miniconda3-latest-Linux-x86_64.sh
 export CONDA_HOME=/opt/miniconda3
 export PATH=${CONDA_HOME}/bin:$PATH
 ```
 
-5.gdal
+- 5.gdal
+```
 wget https://download.osgeo.org/gdal/3.4.0/gdal-3.4.0.tar.gz
 tar -xvzf gdal-3.4.0.tar.gz
 cd gdal-3.4.0
@@ -100,7 +104,7 @@ make
 make install
 ```
 
-5.protobuf 
+- 5.protobuf 
 ```
 wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz
 tar -xzf protobuf-28.3.tar.gz
@@ -113,7 +117,7 @@ sudo make install
 sudo ldconfig
 ```
 
-6.protobuf-c
+- 6.protobuf-c
 ```
 wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz
 tar -xzf protobuf-c-1.5.0.tar.gz
@@ -123,7 +127,7 @@ make
 make install
 ```
 
-- 源码编译
+- postgis
 ```
 export PATH="/usr/bin:$PATH"
 
