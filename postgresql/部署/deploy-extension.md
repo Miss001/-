@@ -71,7 +71,12 @@ cd geos-3.9.1
 ./configure --prefix=/usr/local  
 make & make install
 
-4.gdal
+4.python3
+sh Miniconda3-latest-Linux-x86_64.sh
+export CONDA_HOME=/opt/miniconda3
+export PATH=${CONDA_HOME}/bin:$PATH
+
+5.gdal
 wget https://download.osgeo.org/gdal/3.4.0/gdal-3.4.0.tar.gz
 tar -xvzf gdal-3.4.0.tar.gz
 cd gdal-3.4.0
