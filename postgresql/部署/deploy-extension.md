@@ -44,6 +44,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 # sudo yum install proj-devel geos-devel gdal-devel -y
 # 手动安装
 sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel  -y
+yum -y install gcc g++ cmake zlib-devel 
 
 # 编译安装依赖
 1.sqlite
@@ -80,7 +81,7 @@ export PATH=${CONDA_HOME}/bin:$PATH
 wget https://download.osgeo.org/gdal/3.4.0/gdal-3.4.0.tar.gz
 tar -xvzf gdal-3.4.0.tar.gz
 cd gdal-3.4.0
-./configure --prefix=/usr/local  --with-python=python3 --with-sqlite3=/usr/local/sqlite3
+./configure --prefix=/usr/local  --with-python=python3 --with-sqlite3=sqlite3
 make & make install
 ```
 
