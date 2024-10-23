@@ -118,9 +118,9 @@ sudo ldconfig
 
 6.protobuf-c
 ```
-wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.3.3/protobuf-c-1.3.3.tar.gz
-tar -xzf protobuf-c-1.3.3.tar.gz
-cd protobuf-c-1.3.3
+wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz
+tar -xzf protobuf-c-1.5.0.tar.gz
+cd protobuf-c-1.5.0
 ./configure  --prefix=/usr/local
 make 
 make install
