@@ -81,7 +81,7 @@ export PATH=${CONDA_HOME}/bin:$PATH
 wget https://download.osgeo.org/gdal/3.4.0/gdal-3.4.0.tar.gz
 tar -xvzf gdal-3.4.0.tar.gz
 cd gdal-3.4.0
-./configure --prefix=/usr/local  --with-python=python3 --with-sqlite3=sqlite3
+./configure --prefix=/usr/local  --with-python=python3 --with-sqlite3=/usr/bin/sqlite3
 make & make install
 ```
 
