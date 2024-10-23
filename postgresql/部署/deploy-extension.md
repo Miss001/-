@@ -52,7 +52,8 @@ wget https://www.sqlite.org/2024/sqlite-autoconf-3470000.tar.gz
 tar -zxvf sqlite-autoconf-3470000.tar.gz
 cd sqlite-autoconf-3410000
 ./configure --prefix=/usr/local
-make & make install
+make
+make install
 echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf.d/sqlite3.conf
 sudo ldconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -62,7 +63,8 @@ wget https://download.osgeo.org/proj/proj-8.2.0.tar.gz
 tar -zxvf proj-8.2.0.tar.gz
 cd proj-8.2.0
 ./configure --prefix=/usr/local
-make & make install
+make 
+make install
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 3.geos
@@ -70,7 +72,8 @@ wget https://download.osgeo.org/geos/geos-3.9.1.tar.bz2
 tar -xvjf geos-3.9.1.tar.bz2
 cd geos-3.9.1
 ./configure --prefix=/usr/local  
-make & make install
+make 
+make install
 
 4.python3
 sh Miniconda3-latest-Linux-x86_64.sh
@@ -81,8 +84,9 @@ export PATH=${CONDA_HOME}/bin:$PATH
 wget https://download.osgeo.org/gdal/3.4.0/gdal-3.4.0.tar.gz
 tar -xvzf gdal-3.4.0.tar.gz
 cd gdal-3.4.0
-./configure --prefix=/usr/local  --with-python=python3 --with-sqlite3=/usr/bin/sqlite3
-make & make install
+./configure --prefix=/usr/local  --with-python=python3 --with-sqlite3=/usr/local
+make 
+make install
 ```
 
 - 源码编译
@@ -91,7 +95,8 @@ wget https://download.osgeo.org/postgis/source/postgis-3.3.0.tar.gz
 tar -xvzf postgis-3.3.0.tar.gz
 cd postgis-3.3.0
 ./configure --with-pgconfig=/usr/pgsql-17/bin/pg_config --with-geosconfig=/usr/bin/geos-config --with-projdir=/usr --with-gdalconfig=/usr/bin/gdal-config
-make & make install
+make 
+make install
 ```
 - 
 
