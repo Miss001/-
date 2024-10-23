@@ -148,5 +148,4 @@ cd postgis-3.5.0
 ./configure --with-pgconfig=/opt/postgresql/bin/pg_config --without-protobuf
 make & make install
 ```
-- 
 
