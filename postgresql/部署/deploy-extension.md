@@ -52,6 +52,9 @@ cd cmake-3.15.0
 ./bootstrap
 make
 sudo make install
+
+export PATH="/usr/local/bin:$PATH"
+source ~/.bashrc
 ```
 
 - 2.sqlite
@@ -66,7 +69,14 @@ echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf.d/sqlite3.conf
 sudo ldconfig
 ```
 
-- 3.proj
+- 3.C++14
+```
+sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc devtoolset-7-gcc-c++
+scl enable devtoolset-7 bash
+```
+
+- 4.proj
 ```
 wget https://download.osgeo.org/proj/proj-8.2.0.tar.gz
 tar -zxvf proj-8.2.0.tar.gz
@@ -77,24 +87,23 @@ make install
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 ```
 
-- 4.geos
+- 5.geos
 ```
 wget https://github.com/libgeos/geos/releases/download/3.13.0/geos-3.13.0.tar.bz2
 tar -xvjf geos-3.13.0.tar.bz2
 cd geos-3.13.0
 ./configure --prefix=/usr/local  
-make 
-make install libxml2
+make & make install
 ```
 
-- 4.python3
+- 6.python3
 ```
 sh Miniconda3-latest-Linux-x86_64.sh
 export CONDA_HOME=/opt/miniconda3
 export PATH=${CONDA_HOME}/bin:$PATH
 ```
 
-- 5.gdal
+- 7.gdal
 ```
 wget https://download.osgeo.org/gdal/3.4.0/gdal-3.4.0.tar.gz
 tar -xvzf gdal-3.4.0.tar.gz
@@ -104,20 +113,22 @@ make
 make install
 ```
 
-- 5.protobuf 
+- 8.protobuf 
 ```
 wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz
 tar -xzf protobuf-28.3.tar.gz
 cd protobuf-28.3
 mkdir build
 cd build
-cmake ..              
+cmake -Dprotobuf_BUILD_TESTS=OFF -DABSL_PROVIDER=OFF ..              
 make          
 sudo make install
 sudo ldconfig
+
+-DABSL_ROOT_DIR=/path/to/abseil-cpp
 ```
 
-- 6.protobuf-c
+- 9.protobuf-c
 ```
 wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz
 tar -xzf protobuf-c-1.5.0.tar.gz
@@ -127,7 +138,7 @@ make
 make install
 ```
 
-- postgis
+- 10.postgis
 ```
 export PATH="/usr/bin:$PATH"
 
@@ -135,8 +146,7 @@ wget https://download.osgeo.org/postgis/source/postgis-3.5.0.tar.gz
 tar -xvzf postgis-3.5.0.tar.gz
 cd postgis-3.5.0
 ./configure --with-pgconfig=/opt/postgresql/bin/pg_config --without-protobuf
-make 
-make install
+make & make install
 ```
 - 
 
