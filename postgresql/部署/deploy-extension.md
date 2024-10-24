@@ -41,7 +41,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 实现地理空间功能的使用
 - 依赖安装
 ```
-sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel zlib-devel gcc g++ -y
+sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel zlib-devel -y
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 ```
 - 1.cmake
