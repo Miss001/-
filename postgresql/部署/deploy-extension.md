@@ -144,7 +144,6 @@ cd build
 cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/opt/abseil-cpp  -DABSL_PROPAGATE_CXX_STD=ON  -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..
 make
 make install
-export PKG_CONFIG_PATH=/opt/abseil-cpp/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
 
 - 9.protobuf 
@@ -160,7 +159,7 @@ sudo make install
 sudo ldconfig
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
-export  PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/opt/rh/devtoolset-8/root/usr/lib64/pkgconfig:/opt/rh/devtoolset-8/root/usr/lib64/pkgconfig:/opt/rh/devtoolset-8/root/usr/lib64/pkgconfig
+
 - 9.protobuf-c
 ```
 wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz
