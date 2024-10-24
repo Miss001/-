@@ -141,9 +141,10 @@ unzip abseil-cpp-master.zip
 cd abseil-cpp-master
 mkdir build
 cd build
-cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/opt/abseil-cpp  -DABSL_PROPAGATE_CXX_STD=ON ..
+cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/opt/abseil-cpp  -DABSL_PROPAGATE_CXX_STD=ON  -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..
 make
 make install
+export PKG_CONFIG_PATH=/opt/abseil-cpp/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
 
 - 9.protobuf 
@@ -153,13 +154,13 @@ tar -xzf protobuf-28.3.tar.gz
 cd protobuf-28.3
 mkdir build
 cd build
-cmake -DCMAKE_CXX_STANDARD=14 -Dprotobuf_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON -Dprotobuf_ABSL_PROVIDER=package -DABSL_ROOT_DIR=/opt/abseil-cpp -DCMAKE_PREFIX_PATH=/opt/abseil-cp ..
+cmake -DCMAKE_CXX_STANDARD=14 -Dprotobuf_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON -Dprotobuf_ABSL_PROVIDER=package -DABSL_ROOT_DIR=/opt/abseil-cpp -DCMAKE_PREFIX_PATH=/opt/abseil-cpp/lib64/cmake/absl ..
 make          
 sudo make install
 sudo ldconfig
-
+export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
-
+export  PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/opt/rh/devtoolset-8/root/usr/lib64/pkgconfig:/opt/rh/devtoolset-8/root/usr/lib64/pkgconfig:/opt/rh/devtoolset-8/root/usr/lib64/pkgconfig
 - 9.protobuf-c
 ```
 wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz
