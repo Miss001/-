@@ -136,9 +136,16 @@ make install
 
 - 8.abseil-cpp
 ```
-https://github.com/abseil/abseil-cpp
-
+wget https://github.com/abseil/abseil-cpp/archive/refs/heads/master.zip
+unzip abseil-cpp-master.zip
+cd abseil-cpp-master
+mkdir build
+cd build
+cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/opt/abseil-cpp  -DABSL_PROPAGATE_CXX_STD=ON ..
+make
+make install
 ```
+
 - 9.protobuf 
 ```
 wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz
