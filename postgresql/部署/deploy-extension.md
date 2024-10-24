@@ -185,4 +185,4 @@ cd postgis-3.5.0
 make
 make install
 ```
-
+create extension postgis; 
