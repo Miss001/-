@@ -70,10 +70,28 @@ sudo ldconfig
 ```
 
 - 3.C++14
+  修改镜像源：
+  vi /etc/yum.repos.d/CentOS-SCLo-scl.repo
 ```
+[centos-sclo-sclo]
+name=CentOS-7 - SCLo sclo
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=sclo-sclo
+baseurl=http://mirrors.aliyun.com/centos/7/sclo/$basearch/sclo/
+```
+vi /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
+```
+[centos-sclo-rh]
+name=CentOS-7 - SCLo rh
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=sclo-rh
+baseurl=http://mirrors.aliyun.com/centos/7/sclo/$basearch/rh/
+```
+安装
+```
+sudo yum clean all
 sudo yum install centos-release-scl
-sudo yum install devtoolset-7-gcc devtoolset-7-gcc-c++
-scl enable devtoolset-7 bash
+sudo yum install devtoolset-8 devtoolset-8-gcc devtoolset-8-gcc-c++ devtoolset-8-binutils 
+scl enable devtoolset-8 bash
+export PATH=/opt/rh/devtoolset-8/root/usr/bin:$PATH
 ```
 
 - 4.proj
@@ -92,8 +110,11 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 wget https://github.com/libgeos/geos/releases/download/3.13.0/geos-3.13.0.tar.bz2
 tar -xvjf geos-3.13.0.tar.bz2
 cd geos-3.13.0
-./configure --prefix=/usr/local  
-make & make install
+mkdir build
+cd build
+cmake -DCMAKE_CXX_STANDARD=14 .. 
+make
+make install
 ```
 
 - 6.python3
