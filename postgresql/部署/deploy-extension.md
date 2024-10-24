@@ -46,9 +46,9 @@ export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 ```
 - 1.cmake
 ```
-wget https://cmake.org/files/v3.15/cmake-3.15.0.tar.gz
-tar -zxvf cmake-3.15.0.tar.gz
-cd cmake-3.15.0
+wget https://cmake.org/files/v3.26/cmake-3.26.0.tar.gz
+tar -zxvf cmake-3.26.0.tar.gz
+cd cmake-3.26.0
 ./bootstrap
 make
 sudo make install
@@ -134,14 +134,20 @@ make
 make install
 ```
 
-- 8.protobuf 
+- 8.abseil-cpp
+```
+https://github.com/abseil/abseil-cpp
+
+```
+- 9.protobuf 
 ```
 wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz
 tar -xzf protobuf-28.3.tar.gz
 cd protobuf-28.3
 mkdir build
 cd build
-cmake -Dprotobuf_BUILD_TESTS=OFF -DABSL_PROVIDER=OFF ..              
+cmake -DCMAKE_CXX_STANDARD=14 -Dprotobuf_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON  ..
+Dprotobuf_ABSL_PROVIDER=package and -DCMAKE_PREFIX_PATH=/tmp/absl             
 make          
 sudo make install
 sudo ldconfig
