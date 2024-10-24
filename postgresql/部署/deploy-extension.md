@@ -78,14 +78,14 @@ name=CentOS-7 - SCLo sclo
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=sclo-sclo
 baseurl=http://mirrors.aliyun.com/centos/7/sclo/$basearch/sclo/
 ```
-vi /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
+  vi /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
 ```
 [centos-sclo-rh]
 name=CentOS-7 - SCLo rh
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=sclo-rh
 baseurl=http://mirrors.aliyun.com/centos/7/sclo/$basearch/rh/
 ```
-安装
+  安装
 ```
 sudo yum clean all
 sudo yum install centos-release-scl
