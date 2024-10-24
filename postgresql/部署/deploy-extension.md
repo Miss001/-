@@ -162,6 +162,7 @@ export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
 
 - 9.protobuf-c
+  not work yet
 ```
 wget https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz
 tar -xzf protobuf-c-1.5.0.tar.gz
@@ -179,6 +180,7 @@ wget https://download.osgeo.org/postgis/source/postgis-3.5.0.tar.gz
 tar -xvzf postgis-3.5.0.tar.gz
 cd postgis-3.5.0
 ./configure --with-pgconfig=/opt/postgresql/bin/pg_config --without-protobuf
-make & make install
+make
+make install
 ```
 
