@@ -70,7 +70,7 @@ sudo ldconfig
 ```
 
 - 3.C++14
-  修改镜像源：
+  修改镜像源：  
   vi /etc/yum.repos.d/CentOS-SCLo-scl.repo
 ```
 [centos-sclo-sclo]
