@@ -115,6 +115,8 @@ cd build
 cmake -DCMAKE_CXX_STANDARD=14 .. 
 make
 make install
+export LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
+sudo ldconfig
 ```
 
 - 6.python3
@@ -179,7 +181,7 @@ export PATH="/usr/bin:$PATH"
 wget https://download.osgeo.org/postgis/source/postgis-3.5.0.tar.gz
 tar -xvzf postgis-3.5.0.tar.gz
 cd postgis-3.5.0
-./configure --with-pgconfig=/opt/postgresql/bin/pg_config --without-protobuf
+./configure --with-pgconfig=/opt/postgresql/bin/pg_config --with-geosconfig=/usr/local/bin/geos-config --without-protobuf
 make
 make install
 ```
