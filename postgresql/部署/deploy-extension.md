@@ -144,6 +144,7 @@ cd build
 cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=/opt/abseil-cpp  -DABSL_PROPAGATE_CXX_STD=ON  -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..
 make
 make install
+export PKG_CONFIG_PATH=/opt/abseil-cpp/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
 
 - 9.protobuf 
