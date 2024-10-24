@@ -153,7 +153,7 @@ tar -xzf protobuf-28.3.tar.gz
 cd protobuf-28.3
 mkdir build
 cd build
-cmake -DCMAKE_CXX_STANDARD=14 -Dprotobuf_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON -Dprotobuf_ABSL_PROVIDER=/opt/abseil-cpp -DABSL_ROOT_DIR=/opt/abseil-cpp -DCMAKE_PREFIX_PATH=/opt/abseil-cp ..
+cmake -DCMAKE_CXX_STANDARD=14 -Dprotobuf_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON -Dprotobuf_ABSL_PROVIDER=package -DABSL_ROOT_DIR=/opt/abseil-cpp -DCMAKE_PREFIX_PATH=/opt/abseil-cp ..
 make          
 sudo make install
 sudo ldconfig
