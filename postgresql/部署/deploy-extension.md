@@ -43,6 +43,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 sudo yum install libxml2-devel libjpeg-devel libpng-devel libtiff libtiff-devel zlib-devel -y
 export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/local/lib64:$LD_LIBRARY_PATH"
+
 ```
 - 1.cmake
 ```
@@ -115,8 +117,6 @@ cd build
 cmake -DCMAKE_CXX_STANDARD=14 .. 
 make
 make install
-export LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
-sudo ldconfig
 ```
 
 - 6.python3
@@ -158,8 +158,7 @@ mkdir build
 cd build
 cmake -DCMAKE_CXX_STANDARD=14 -Dprotobuf_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=ON -Dprotobuf_ABSL_PROVIDER=package -DABSL_ROOT_DIR=/opt/abseil-cpp -DCMAKE_PREFIX_PATH=/opt/abseil-cpp/lib64/cmake/absl ..
 make          
-sudo make install
-sudo ldconfig
+make install
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:$PKG_CONFIG_PATH
 ```
 
