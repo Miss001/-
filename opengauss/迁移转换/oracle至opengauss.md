@@ -1,26 +1,27 @@
 
 # 语法差异转换
 
-|                          | opengauss6.0.0(oracle兼容环境)                               | oracle11                                                     |
-| ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| >= ,<=                   | 不允许包含空格                                               | 可包含空格，如（> =,< =）                                    |
-| dual                     | select 1                                                     | select 1 from DUAL                                           |
+|                          | opengauss6.0.0(oracle兼容环境)                               | oracle11          |
+| ------------------------ | ------------------------------------------------------------ | ----------------- |
+| rowid                    | ctid                                                         | rowid             |
+| >= ,<=                   | 不允许包含空格                                                | 可包含空格，如（> =,< =） |
+| dual                     | select 1                                                     | select 1 from DUAL      |
 | rownum                   | SELECT rownum,a.* FROM test a;<br/>SELECT * FROM test  WHERE rownum<=2; | SELECT rownum,a.* FROM test a;<br/>SELECT * FROM test  WHERE rownum < =2 ; |
-| sys_guid                 | 无                                                           | select sys_guid() from dual                                  |
-| nvl                      | NVL(NULL,'1')                                                | NVL(NULL,'1')                                                |
-| instr                    | INSTR('APP', 'P',1,1)                                        | INSTR('APP', 'P',1,1)                                        |
+| sys_guid                 | 无                                                           | select sys_guid() from dual     |
+| nvl                      | NVL(NULL,'1')                                                | NVL(NULL,'1')                   |
+| instr                    | INSTR('APP', 'P',1,1)                                        | INSTR('APP', 'P',1,1)            |
 | decode                   | SELECT<br/>  DECODE(id,1,'Pending',2,'Paid',3 ,'Shipped','Unknown')as name<br/>FROM test | SELECT<br/>  DECODE(id,1,'Pending',2,'Paid',3 ,'Shipped','Unknown')as name<br/>FROM test |
-| syddate                  | SYSDATE                                                      | SYSDATE                                                      |
-| trunc(date)              | TRUNC(sysdate)                                               | TRUNC(sysdate)                                               |
+| syddate                  | SYSDATE                                                      | SYSDATE                       |
+| trunc(date)              | TRUNC(sysdate)                                               | TRUNC(sysdate)                |
 | months_between           | SELECT EXTRACT(YEAR FROM AGE('2024-01-17 14:45:30'::TIMESTAMP, '2023-10-01 00:00:00'::TIMESTAMP)) * 12 +<br/>       EXTRACT(MONTH FROM AGE('2024-01-17 14:45:30'::TIMESTAMP, '2023-10-01 00:00:00'::TIMESTAMP))+<br/>       EXTRACT(DAY FROM AGE('2024-01-17 14:45:30'::TIMESTAMP, '2023-10-01 00:00:00'::TIMESTAMP)) /30<br/>       AS months_difference; | select MONTHS_BETWEEN(to_date('2024-01-17 14:45:30','yyyy-mm-dd hh24:mi:ss'),<br/>                      to_date('2023-10-01 00:00:00','yyyy-mm-dd hh24:mi:ss')) <br/>  from dual |
-| add_months               | select ADD_MONTHS(sysdate, 1)                                | select ADD_MONTHS(sysdate, 1) from dual                      |
-| last_day                 | select LAST_DAY(trunc(sysdate))                              | select LAST_DAY(trunc(sysdate)) from dual                    |
+| add_months               | select ADD_MONTHS(sysdate, 1)                                | select ADD_MONTHS(sysdate, 1) from dual      |
+| last_day                 | select LAST_DAY(trunc(sysdate))                              | select LAST_DAY(trunc(sysdate)) from dual    |
 | 日期相减（天）           | select extract(EPOCH  from sysdate - to_date('2023-01-01','yyyy-mm-dd'))/86400 | select sysdate - to_date('2023-01-01','yyyy-mm-dd') from dual |
-| 时间加减（天）           | select sysdate+1                                             | select sysdate+1 from dual                                   |
-| chr(0)                   | 读取为NULL字符                                               | 读取为空字符(chr(0))                                         |
-| 空字符串（''）           | 读取为 NULL                                                  | 读取为 NULL                                                  |
-| 尾部空格字符串（' '）    | 读取为空格字符串（' '）                                      | 读取为空格字符串（' '）                                      |
-| NULL值与非NULL值字符拼接 | 结果为：非NULL值                                             | 结果为：非NULL值                                             |
+| 时间加减（天）           | select sysdate+1                                             | select sysdate+1 from dual                      |
+| chr(0)                   | 读取为NULL字符                                               | 读取为空字符(chr(0))                                   |
+| 空字符串（''）           | 读取为 NULL                                                  | 读取为 NULL                                            |
+| 尾部空格字符串（' '）    | 读取为空格字符串（' '）                                      | 读取为空格字符串（' '）                                   |
+| NULL值与非NULL值字符拼接 | 结果为：非NULL值                                             | 结果为：非NULL值                                         |
 | 递归查询                 | select id, parent_id ,level as recursion_level<br/>from tmp3  start with parent_id IS NULL<br/>  connect by prior id = parent_id | select id, parent_id ,level as recursion_level<br/>from tmp3  start with parent_id IS NULL<br/>  connect by prior id = parent_id |
 | 分层查询                 | SELECT "DATE"<br/>  FROM generate_series(timestamp '2010-01-01',<br/>                       timestamp '2010-02-01',<br/>                       interval '1 day') s("DATE"); | SELECT to_date('2010-01-01','yyyy-mm-dd') + level - 1<br/>FROM dual<br/>CONNECT BY LEVEL <= to_date('2010-02-01','yyyy-mm-dd') - to_date('2010-01-01','yyyy-mm-dd') + 1; |
 | (+)进行外连接            | SELECT *<br/>FROM<br/>  tmp1 a,<br/>  tmp2 b<br/>WHERE<br/>  b.id (+)= a.user_id | SELECT *<br/>FROM<br/>  tmp1 a,<br/>  tmp2 b<br/>WHERE<br/>  b.id (+)= a.user_id |
