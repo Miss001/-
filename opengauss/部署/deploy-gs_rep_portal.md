@@ -1,5 +1,5 @@
 # 安装gs_rep_portal
-**安装java**
+**安装java**  
 1.8版本不支持
 ```
 yum search java|grep jdk
