@@ -1,5 +1,5 @@
 # gs_rep_portal工具
-**全量迁移**
+**全量迁移**  
 修改plan配置的数据库连接信息    
 vi /opt/portal/workspace/1/config/migrationConfig.properties  
 ```
@@ -28,3 +28,5 @@ opengauss.database.iscluster=false
 cd /opt/portal
 sh gs_rep_portal.sh start_mysql_full_migration 1 &
 ```
+
+# DataKit工具
