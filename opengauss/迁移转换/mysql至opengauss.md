@@ -28,7 +28,7 @@ opengauss.database.iscluster=false
 cd /opt/portal
 启动准备动作时的命令：
 sh gs_rep_portal.sh start_kafka a
-sh gs_rep_portal.sh start_mysql_full_migration 1 &
+su omm -c "sh gs_rep_portal.sh start_mysql_full_migration 1 &"
 ```
 
 # DataKit工具
