@@ -150,7 +150,7 @@ opengauss.database.iscluster=false
 启动kafka
 ```
 cd /opt/portal
-sh gs_rep_portal.sh start_kafka a
+sh gs_rep_portal.sh start_kafka 1
 ```
 执行迁移任务
 ```
