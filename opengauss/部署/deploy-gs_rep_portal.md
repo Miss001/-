@@ -58,4 +58,8 @@ sh gs_rep_portal.sh install_mysql_incremental_migration_tools_offline  1 &
 sh gs_rep_portal.sh install_mysql_reverse_migration_tools_offline  1 &
 sh gs_rep_portal.sh install_mysql_datacheck_tools_offline	 1 &
 ```
+# 权限更改
+```
+chown -R omm:dbgrp /home/omm
+```
 
