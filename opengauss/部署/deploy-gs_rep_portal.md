@@ -35,9 +35,9 @@ datacheck.pkg.path=/opt/portal/pkg/datacheck/
 ```
 # 安装工具
 ```
-sh gs_rep_portal.sh install_mysql_full_migration_tools_offline 1 &
-sh gs_rep_portal.sh install_mysql_incremental_migration_tools_offline 1 &
-sh gs_rep_portal.sh install_mysql_reverse_migration_tools_offline 1 &
-sh gs_rep_portal.sh install_mysql_datacheck_tools_offline	1 &
+sh gs_rep_portal.sh install_mysql_full_migration_tools_offline  1 &
+sh gs_rep_portal.sh install_mysql_incremental_migration_tools_offline  1 &
+sh gs_rep_portal.sh install_mysql_reverse_migration_tools_offline  1 &
+sh gs_rep_portal.sh install_mysql_datacheck_tools_offline	 1 &
 ```
 
