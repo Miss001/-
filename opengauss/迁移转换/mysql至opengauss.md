@@ -26,6 +26,8 @@ opengauss.database.iscluster=false
 执行迁移任务
 ```
 cd /opt/portal
+启动准备动作时的命令：
+sh gs_rep_portal.sh start_kafka a
 sh gs_rep_portal.sh start_mysql_full_migration 1 &
 ```
 
