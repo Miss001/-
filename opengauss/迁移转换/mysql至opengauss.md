@@ -169,6 +169,7 @@ su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_sou
 # 执行全量迁移
 su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql"
 ```
-## 增量迁移-chameleon
+## 增量迁移-gs_replicate
+
 
 # DataKit工具
