@@ -49,7 +49,7 @@ sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
 ## 全量迁移-chameleon
 vi /home/omm/.pg_chameleon/configuration/default_1.yml
 ```
-pid_dir: /opt/portal/workspace/1/pid/
+pid_dir: /home/omm/portal/workspace/1/pid/
 log_dir: ~/.pg_chameleon/logs/
 log_dest: file
 log_level: info
@@ -105,8 +105,8 @@ sources:
     batch_retention: 1 day
     copy_max_memory: 300M
     copy_mode: file
-    out_dir: /opt/portal/workspace/1/tmp/
-    csv_dir: /opt/portal/workspace/1/tmp/
+    out_dir: /home/omm/portal/workspace/1/tmp/
+    csv_dir: /home/omm/portal/workspace/1/tmp/
     contain_columns: false
     column_split: ','
     sleep_loop: 1
@@ -169,13 +169,14 @@ su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_sou
 # 执行全量迁移
 su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql"
 ```
+
 ## 增量迁移-gs_replicate
-要求：
-支持MySQL IUD操作（insert、update、delete）产生的增量数据迁移至openGauss。
-支持迁移openGauss数据库兼容的MySQL DDL语句，对于不兼容的DDL，迁移时会报错处理（openGauss在完善对DDL的兼容性）。
-不支持skip_event, limit_table, skip_table等设置。
-MySQL需要5.7及以上版本。
-MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能
+要求：  
+支持MySQL IUD操作（insert、update、delete）产生的增量数据迁移至openGauss  
+支持迁移openGauss数据库兼容的MySQL DDL语句，对于不兼容的DDL，迁移时会报错处理（openGauss在完善对DDL的兼容性）  
+不支持skip_event, limit_table, skip_table等设置  
+MySQL需要5.7及以上版本  
+MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能  
 
 
 # DataKit工具
