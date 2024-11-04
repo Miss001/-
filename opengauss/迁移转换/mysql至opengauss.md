@@ -4,49 +4,7 @@
 ```
 su - omm
 ```
-## 集成工具gs_rep_portal迁移
-修改任务（1）配置的数据库连接信息    
-vi /home/omm/portal/workspace/1/config/migrationConfig.properties  
-```
-mysql.user.name=root
-mysql.user.password=***
-mysql.database.host=127.0.0.1
-mysql.database.port=3306
-mysql.database.name=test123
-#mysql.database.table=
-
-opengauss.user.name=test
-opengauss.user.password=***
-opengauss.database.host=127.0.0.1
-opengauss.database.port=5432
-opengauss.database.name=test1234
-opengauss.database.schema=test123
-# opengauss数据库是否为集群，可选择true/false，选择true时，需配置opengauss.database.standby.hostnames和opengauss.database.standby.ports
-opengauss.database.iscluster=false
-# opengauss数据库备机ip1,ip2,...，多个备机ip间用英文逗号隔开
-# opengauss.database.standby.hostnames=127.0.0.2,127.0.0.3
-# opengauss数据库备机端口port1,port2,...，多个备机port间用英文逗号隔开，注意需要与备机ip1,ip2,...保持对应
-# opengauss.database.standby.ports=5432,5432
-```
-启动kafka
-```
-cd /opt/portal
-sh gs_rep_portal.sh start_kafka 1
-```
-执行迁移任务
-```
-cd /home/omm/portal
-#全量迁移
-sh gs_rep_portal.sh start_mysql_full_migration 1 &
-#全量校验
-sh gs_rep_portal.sh start_mysql_full_migration_datacheck 1 &
-#增量迁移
-sh gs_rep_portal.sh start_mysql_incremental_migration 1 &
-#增量校验
-sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
-```
-
-## 全量迁移-chameleon
+## 全量迁移-chameleon（基础工具）
 vi /home/omm/.pg_chameleon/configuration/default_1.yml
 ```
 pid_dir: /home/omm/portal/workspace/1/pid/
@@ -168,6 +126,58 @@ su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon create_
 su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_source --config default_1 --source mysql"
 # 执行全量迁移
 su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql"
+```
+
+## 集成工具gs_rep_portal迁移
+修改任务（1）配置的数据库连接信息    
+vi /home/omm/portal/workspace/1/config/migrationConfig.properties  
+```
+mysql.user.name=root
+mysql.user.password=***
+mysql.database.host=127.0.0.1
+mysql.database.port=3306
+mysql.database.name=test123
+#mysql.database.table=
+
+opengauss.user.name=test
+opengauss.user.password=***
+opengauss.database.host=127.0.0.1
+opengauss.database.port=5432
+opengauss.database.name=test1234
+opengauss.database.schema=test123
+# opengauss数据库是否为集群，可选择true/false，选择true时，需配置opengauss.database.standby.hostnames和opengauss.database.standby.ports
+opengauss.database.iscluster=false
+# opengauss数据库备机ip1,ip2,...，多个备机ip间用英文逗号隔开
+# opengauss.database.standby.hostnames=127.0.0.2,127.0.0.3
+# opengauss数据库备机端口port1,port2,...，多个备机port间用英文逗号隔开，注意需要与备机ip1,ip2,...保持对应
+# opengauss.database.standby.ports=5432,5432
+```
+启动kafka
+```
+cd /opt/portal
+sh gs_rep_portal.sh start_kafka 1
+```
+执行迁移任务
+```
+cd /home/omm/portal
+#全量迁移
+sh gs_rep_portal.sh start_mysql_full_migration 1 &
+#全量校验
+sh gs_rep_portal.sh start_mysql_full_migration_datacheck 1 &
+#增量迁移
+sh gs_rep_portal.sh start_mysql_incremental_migration 1 &
+#增量校验
+sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
+```
+
+## 全量迁移-gs_mysync
+创建迁移任务
+```
+sh gs_mysync.sh install 1
+```
+执行迁移任务
+```
+sh gs_mysync.sh start 2
 ```
 
 ## 增量迁移-gs_replicate
