@@ -8,7 +8,7 @@ java -version
 **安装portal**  
 #下载解压
 ```
-cd /opt
+su - omm
 wget https://opengauss.obs.cn-south-1.myhuaweicloud.com/6.0.0/tools/centos7/PortalControl-6.0.0-x86_64.tar.gz
 tar -zxvf PortalControl-6.0.0-x86_64.tar.gz
 cd portal
