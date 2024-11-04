@@ -39,7 +39,7 @@ cd /home/omm/portal
 #全量迁移
 sh gs_rep_portal.sh start_mysql_full_migration 1 &
 #全量校验
-sh gs_rep_portal.sh start_mysql_full_migration_datacheck	 1 &
+sh gs_rep_portal.sh start_mysql_full_migration_datacheck 1 &
 #增量迁移
 sh gs_rep_portal.sh start_mysql_incremental_migration 1 &
 #增量校验
