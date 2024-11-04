@@ -4,7 +4,7 @@
 ```
 su - omm
 ```
-## 全量迁移-gs_rep_portal
+## 集成工具gs_rep_portal迁移
 修改任务（1）配置的数据库连接信息    
 vi /home/omm/portal/workspace/1/config/migrationConfig.properties  
 ```
