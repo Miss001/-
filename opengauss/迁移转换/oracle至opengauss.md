@@ -32,3 +32,5 @@
 | nologging                | create unlogged table test1 as<br/>select * from test where rownum<=10 | create table test1 nologging as<br/>select * from test where rownum<=10 |
 
 
+# 迁移工具
+ora2og
