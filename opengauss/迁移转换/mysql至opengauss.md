@@ -126,6 +126,9 @@ sources:
 /home/omm/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_source --config default_1 --source mysql
 # 执行全量迁移
 /home/omm/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql
+# 清除迁移临时文件
+/home/omm/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon detach_replica --config default_1 --source mysql
+
 ```
 
 ## 集成工具gs_rep_portal迁移
@@ -295,12 +298,11 @@ kafka.bootstrap.server=localhost:9092
 wait.timeout.second=28800
 
 ```
-
- case 3：若和全量迁移chameleon对接，快照点从表sch_chameleon.t_replica_batch中获得。
-
-binlog文件名与列t_binlog_name相对应，binlog位置与列i_binlog_position相对应，gtid set与列 t_gtid_set相对应
 vi mysql-sink.properties
+```
 
+
+```
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka 1
