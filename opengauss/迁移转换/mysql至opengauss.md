@@ -5,7 +5,7 @@
 su - omm
 ```
 ## 全量迁移-gs_rep_portal
-修改任务配置的数据库连接信息    
+修改任务（1）配置的数据库连接信息    
 vi /home/omm/portal/workspace/1/config/migrationConfig.properties  
 ```
 mysql.user.name=root
@@ -35,8 +35,15 @@ sh gs_rep_portal.sh start_kafka 1
 ```
 执行迁移任务
 ```
-cd /opt/portal
-su omm -c "sh gs_rep_portal.sh start_mysql_full_migration 1 &"
+cd /home/omm/portal
+#全量迁移
+sh gs_rep_portal.sh start_mysql_full_migration 1 &
+#全量校验
+sh gs_rep_portal.sh start_mysql_full_migration_datacheck	 1 &
+#增量迁移
+sh gs_rep_portal.sh start_mysql_incremental_migration 1 &
+#增量校验
+sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
 ```
 
 ## 全量迁移-chameleon
@@ -162,5 +169,6 @@ su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_sou
 # 执行全量迁移
 su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql"
 ```
+## 增量迁移-chameleon
 
 # DataKit工具
