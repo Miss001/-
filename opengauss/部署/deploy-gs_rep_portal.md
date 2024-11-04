@@ -51,7 +51,7 @@ datacheck.pkg.name=gs_datacheck-${tools.version}.tar.gz
 datacheck.extract.jar.name=datachecker-extract-${tools.version}.jar
 datacheck.check.jar.name=datachecker-check-${tools.version}.jar                                                        
 ```
-# 安装工具
+**安装迁移工具**  
 ```
 sh gs_rep_portal.sh install_mysql_full_migration_tools_offline  1 &
 sh gs_rep_portal.sh install_mysql_incremental_migration_tools_offline  1 &
