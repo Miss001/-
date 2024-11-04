@@ -1,8 +1,12 @@
 # 迁移工具
-通过gs_rep_portal工具包安装各个迁移工具
+通过gs_rep_portal工具包安装各个迁移工具  
+切换用户进行操作root用户无法成功进行迁移  
+```
+su - omm
+```
 ## 全量迁移-gs_rep_portal
-修改plan配置的数据库连接信息    
-vi /opt/portal/workspace/1/config/migrationConfig.properties  
+修改任务配置的数据库连接信息    
+vi /home/omm/portal/workspace/1/config/migrationConfig.properties  
 ```
 mysql.user.name=root
 mysql.user.password=***
