@@ -5,7 +5,7 @@ yum search java|grep jdk
 yum install -y java-11-openjdk*
 java -version
 ```
-**portal**
+**安装portal**  
 #下载解压
 ```
 cd /opt
