@@ -1,1 +1,15 @@
+# 安装依赖
+root用户
+```
+yum -y install perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
 
+rpm -ivh oracle-instantclient19.10-basic-19.10.0.0.0-1.x86_64.rpm
+rpm -ivh oracle-instantclient19.10-devel-19.10.0.0.0-1.x86_64.rpm 
+rpm -ivh oracle-instantclient19.10-jdbc-19.10.0.0.0-1.x86_64.rpm 
+rpm -ivh oracle-instantclient19.10-sqlplus-19.10.0.0.0-1.x86_64.rpm
+```
+
+安装包下载编译
+```
+wget https://gitee.com/opengauss/openGauss-tools-ora2og/repository/archive/master.zip
+```
