@@ -196,7 +196,7 @@ sh gs_mysync.sh start 1
   支持MySQL IUD操作（insert、update、delete）产生的增量数据迁移至openGauss  
   支持迁移openGauss数据库兼容的MySQL DDL语句，对于不兼容的DDL，迁移时会报错处理（openGauss在完善对DDL的兼容性）  
   不支持skip_event, limit_table, skip_table等设置  
-  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能
+  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能  
 **配置文件**  
 
 前提：启动kafka
