@@ -121,11 +121,11 @@ sources:
 执行迁移任务  
 ```
 # 创建schema
-su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon create_replica_schema --config default_1"
+/home/omm/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon create_replica_schema --config default_1
 # 添加schema源
-su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_source --config default_1 --source mysql"
+/home/omm/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon add_source --config default_1 --source mysql
 # 执行全量迁移
-su omm -c"/opt/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql"
+/home/omm/portal/tools/chameleon/chameleon-6.0.0/venv/bin/chameleon init_replica --config default_1 --source mysql
 ```
 
 ## 集成工具gs_rep_portal迁移
@@ -154,7 +154,7 @@ opengauss.database.iscluster=false
 ```
 启动kafka
 ```
-cd /opt/portal
+cd /home/omm/portal
 sh gs_rep_portal.sh start_kafka 1
 ```
 执行迁移任务
@@ -171,7 +171,10 @@ sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
 ```
 
 ## 全量迁移-gs_mysync
-依赖chameleon进行迁移  
+前提：启动kafka
+```
+sh gs_rep_portal.sh start_kafka 1
+```
 创建迁移任务
 ```
 sh gs_mysync.sh install 1
@@ -186,7 +189,11 @@ sh gs_mysync.sh start 1
 支持MySQL IUD操作（insert、update、delete）产生的增量数据迁移至openGauss  
 支持迁移openGauss数据库兼容的MySQL DDL语句，对于不兼容的DDL，迁移时会报错处理（openGauss在完善对DDL的兼容性）  
 不支持skip_event, limit_table, skip_table等设置  
-MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能  
+MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能
+前提：启动kafka
+```
+sh gs_rep_portal.sh start_kafka 1
+```
 创建迁移任务
 ```
 sh gs_replicate.sh install mysql-opengauss 1
