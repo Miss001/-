@@ -185,11 +185,13 @@ sh gs_mysync.sh start 1
 ```
 
 ## 增量迁移-gs_replicate
-要求：  
-支持MySQL IUD操作（insert、update、delete）产生的增量数据迁移至openGauss  
-支持迁移openGauss数据库兼容的MySQL DDL语句，对于不兼容的DDL，迁移时会报错处理（openGauss在完善对DDL的兼容性）  
-不支持skip_event, limit_table, skip_table等设置  
-MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能
+- 实现原理： Debezium   
+  connector监控一个上游数据库服务器，捕获所有的数据库更改，然后记录到一个或者多个Kafka topic(通常一个数据库表对应一个kafka topic)。所有的应用都去消费kafka中的消息
+- 要求：  
+  支持MySQL IUD操作（insert、update、delete）产生的增量数据迁移至openGauss  
+  支持迁移openGauss数据库兼容的MySQL DDL语句，对于不兼容的DDL，迁移时会报错处理（openGauss在完善对DDL的兼容性）  
+  不支持skip_event, limit_table, skip_table等设置  
+  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能  
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka 1
