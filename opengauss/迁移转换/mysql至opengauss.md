@@ -174,7 +174,7 @@ sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
 ```
 
 ## 全量迁移-gs_mysync
-- 执行迁移完成后会将sch_chameleon清除。
+- 迁移完成后会将sch_chameleon清除
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka 1
