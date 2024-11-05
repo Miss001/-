@@ -6,7 +6,7 @@
 | ifnull                           | select ifnull(null,1)                                        | select ifnull(null,1)                                        |
 | limit                            | select * from test limit 0,2                                 | select * from test limit 0,2                                 |
 | group_concat                     | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select group_concat(i SEPARATOR ',')  from t group by id | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select group_concat(i SEPARATOR ',')  from t group by id |
-| 尾部空格字符串（' '）            | 读取为空格字符串（' '）                                      | 当字符集排序规则的Pad_attribute='PAD SPACE'时，<br/>识别为：空字符串（''）,like 除外<br/>当字符集排序规则的Pad_attribute='NO PAD'时，<br/>识别为：空格字符串（' '） |
+| 尾部空格字符串（' '）             | 读取为空字符串（''）                                      | 当字符集排序规则的Pad_attribute='PAD SPACE'时，<br/>识别为：空字符串（''）,like 除外<br/>当字符集排序规则的Pad_attribute='NO PAD'时，<br/>识别为：空格字符串（' '） |
 | if                               | select if(id=1,'男','女') from test                          | select if(id=1,'男','女') from test                          |
 | str_to_date                      | select str_to_date('2024-01-01 00:0:00','%Y-%m-%d %H:%s:%i') | select str_to_date('2024-01-01 00:0:00','%Y-%m-%d %H:%s:%i') |
 | date_format                      | select date_format(now(),'%Y-%m-%d %H:%s:%i')                | select date_format(now(),'%Y-%m-%d %H:%s:%i')                |
