@@ -1,3 +1,25 @@
+# 语法转换差异
+
+|                                  | opengauss6.0.0(兼容mysql)                                    | mysql8                                                       |
+| -------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| uuid                             | select uuid_short()                                          | select uuid()                                                |
+| ifnull                           | select ifnull(null,1)                                        | select ifnull(null,1)                                        |
+| limit                            | select * from test limit 0,2                                 | select * from test limit 0,2                                 |
+| group_concat                     | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select group_concat(i SEPARATOR ',')  from t group by id | with<br/>t as(<br/>select 1 as i ,'a' as id<br/>union ALL<br/>select null as i,'a' as id<br/>union ALL<br/>select 2 as i,'b' as id<br/>union ALL<br/>select 3 as i,'b' as id<br/>)<br/>select group_concat(i SEPARATOR ',')  from t group by id |
+| 尾部空格字符串（' '）            | 读取为空格字符串（' '）                                      | 当字符集排序规则的Pad_attribute='PAD SPACE'时，<br/>识别为：空字符串（''）,like 除外<br/>当字符集排序规则的Pad_attribute='NO PAD'时，<br/>识别为：空格字符串（' '） |
+| if                               | select if(id=1,'男','女') from test                          | select if(id=1,'男','女') from test                          |
+| str_to_date                      | select str_to_date('2024-01-01 00:0:00','%Y-%m-%d %H:%s:%i') | select str_to_date('2024-01-01 00:0:00','%Y-%m-%d %H:%s:%i') |
+| date_format                      | select date_format(now(),'%Y-%m-%d %H:%s:%i')                | select date_format(now(),'%Y-%m-%d %H:%s:%i')                |
+| timestampdiff                    | select timestampdiff(SECOND,str_to_date('2024-01-01 00:00:00','%Y-%m-%d %H:%s:%i'),now()) | select timestampdiff(SECOND,str_to_date('2024-01-01 00:00:00','%Y-%m-%d %H:%s:%i'),now()) |
+| interval                         | select  now() + interval 1 DAY                               | select  now() + interval 1 DAY                               |
+| 伪劣排序                         | select row_number() over () as rowId from test               | select (@i:=@i+1) As rowId<br/>from test a,<br/>     (select @i := 0) b |
+| replace into                     | replace into test(id,content)<br/>select 1,'tx'              | replace into test(id,content)<br/>select 1,'tx'              |
+| insert … on duplicate key update | 不支持子查询                                                 | INSERT INTO test (id, content) <br/>select * from(<br/>select 2 as id,'tx' as content<br/>)b<br/>ON DUPLICATE KEY <br/>UPDATE content=b.content |
+| insert ignore                    | INSERT IGNORE INTO test(id, content) <br/>select 3 as id,'tx' as content | INSERT IGNORE INTO test(id, content) <br/>select 3 as id,'tx' as content |
+| 多表关联更新                     | UPDATE <br/>    product p<br/>    JOIN product_segment s ON p.segment_id = s.id<br/>    JOIN segment t ON s.segment=t.segment<br/>SET <br/>    p.net_price = p.price - p.price * s.discount,<br/>    p.segment_name=t.segment | UPDATE <br/>    product p<br/>    JOIN product_segment s ON p.segment_id = s.id<br/>    JOIN segment t ON s.segment=t.segment<br/>SET <br/>    p.net_price = p.price - p.price * s.discount,<br/>    p.segment_name=t.segment |
+
+
+
 # 迁移工具
 通过gs_rep_portal工具包安装各个迁移工具  
 切换用户进行操作root用户无法成功进行迁移  
