@@ -2,8 +2,10 @@
 root用户安装
 - 安装基础依赖
 ```
-yum install -y perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
-yum install perl-CPAN
+yum install -y perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open 
+yum install -y perl-YAML
+yum install -y perl-CPAN
+perl -MCPAN -e 'install JSON'
 perl -MCPAN -e 'install DBI'
 ```
 - 安装依赖： DBD::Pg
@@ -11,12 +13,18 @@ perl -MCPAN -e 'install DBI'
 -------配置-----
 ln -s /opt/openGauss/install/app/include/postgresql/server/libpq/libpq-fe.h /opt/openGauss/install/app/include/postgresql/server/libpq-fe.h
 
+#配置环境变量
+vi /root/.bash_profile
+export LD_LIBRARY_PATH=/opt/openGauss/install/app/lib/:$LD_LIBRARY_PATH
+#使变量生效
+source /root/.bash_profile
+
 -------安装依赖-----
 perl -MCPAN -e 'install DBD::Pg'
 #pg_config: /opt/openGauss/install/app/bin/
 #verions: 9
-#verions: 9
-#verions: 9
+#verions: 2
+#verions: 4
 #bin path: /opt/openGauss/install/app/bin/
 #include path: /opt/openGauss/install/app/include/postgresql/server/
 #library path: /opt/openGauss/install/app/lib/
