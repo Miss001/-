@@ -1,6 +1,6 @@
 # 语法转换差异
 
-|                                  | opengauss6.0.0(兼容mysql)                                    | mysql8                                                       |
+|                                  | opengauss6.0.0(兼容mysql)                                    | mysql8.0.30                                                       |
 | -------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | uuid                             | select uuid_short()                                          | select uuid()                                                |
 | ifnull                           | select ifnull(null,1)                                        | select ifnull(null,1)                                        |
