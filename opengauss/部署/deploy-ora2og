@@ -1,16 +1,41 @@
 # 安装依赖
+安装oracle客户端
+```
+#rpm包下载地址
+https://yum.oracle.com/repo/OracleLinux/OL7/oracle/instantclient21/x86_64/
+#rpm安装
+rpm -ivh oracle-instantclient-basic-21.1.0.0.0-1.x86_64.rpm 
+rpm -ivh oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm 
+rpm -ivh oracle-instantclient-jdbc-21.1.0.0.0-1.x86_64.rpm 
+rpm -ivh oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm
+
+#配置环境变量
+vi /root/.bash_profile
+export ORACLE_HOME=/usr/lib/oracle/21/client64
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+#使变量生效
+source /root/.bash_profile
+```
+安装postgre9.2.4
+
 root用户安装依赖
 ```
 yum install -y perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
 yum install perl-CPAN
 perl -MCPAN -e 'install DBI'
 perl -MCPAN -e 'install DBD::Pg'
-
-rpm -ivh oracle-instantclient19.10-basic-19.10.0.0.0-1.x86_64.rpm
-rpm -ivh oracle-instantclient19.10-devel-19.10.0.0.0-1.x86_64.rpm 
-rpm -ivh oracle-instantclient19.10-jdbc-19.10.0.0.0-1.x86_64.rpm 
-rpm -ivh oracle-instantclient19.10-sqlplus-19.10.0.0.0-1.x86_64.rpm
+#pg_config: /opt/openGauss/install/app/bin/
+#verions: 9
+#verions: 9
+#verions: 9
+#bin path: /opt/openGauss/install/app/bin/
+#include path: /opt/openGauss/install/app/include/postgresql/server/
+#library path: /opt/openGauss/install/app/lib/
+perl -MCPAN -e 'install DBD::Oracle'
 ```
+
+/opt/openGauss/install/app/: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
 
 安装包下载编译
 ```
