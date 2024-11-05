@@ -38,8 +38,52 @@
 ### 全量迁移
 创建迁移项目
 ```
+cd /home/omm/ora2og
 ora2pg --init_project oramig
 ```
+修改配置文件  
+vi /home/omm/ora2og/oramig/config/ora2pg.conf
+```
+#------------------------------------------------------------------------------
+# INPUT SECTION (Oracle connection or input file)
+#------------------------------------------------------------------------------
 
+# Set this directive to a file containing PL/SQL Oracle Code like function,
+# procedure or a full package body to prevent Ora2Pg from connecting to an
+# Oracle database end just apply his conversion tool to the content of the
+# file. This can only be used with the following export type: PROCEDURE,
+# FUNCTION or PACKAGE. If you don't know what you do don't use this directive.
+#INPUT_FILE     ora_plsql_src.sql
+
+# Set the Oracle home directory
+ORACLE_HOME     /usr/lib/oracle/21/client64
+
+# Set Oracle database connection (datasource, user, password)
+ORACLE_DSN      dbi:Oracle:host=192.168.131.135;sid=helowin;port=1521
+ORACLE_USER     root
+ORACLE_PWD      root@@123
+
+#------------------------------------------------------------------------------
+# OUTPUT SECTION (Control output to file or PostgreSQL database)
+#------------------------------------------------------------------------------
+
+# Define the following directive to send export directly to a PostgreSQL
+# database, this will disable file output. Note that these directives are only
+# used for data export, other export need to be imported manually through the
+# use og psql or any other PostgreSQL client.
+PG_DSN          dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400
+PG_USER         root
+PG_PWD          root@@123
+
+# By default all output is dump to STDOUT if not send directly to postgresql
+# database (see above). Give a filename to save export to it. If you want
+# a Gzip'd compressed file just add the extension .gz to the filename (you
+# need perl module Compress::Zlib from CPAN). Add extension .bz2 to use Bzip2
+# compression.
+OUTPUT          output.sql
+
+# Base directory where all dumped files must be written
+OUTPUT_DIR      /home/omm/ora2og/oramig/output
+```
 
 
