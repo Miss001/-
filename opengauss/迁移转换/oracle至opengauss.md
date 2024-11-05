@@ -35,8 +35,11 @@
 # 迁移工具
 ## ora2og
 - 原理：通过连接Oracle数据库，自动扫描并提取其中的对象结构及数据，产生SQL脚本，通过手动或自动的方式将其应用到opengauss
-
+### 全量迁移
+创建迁移项目
+```
 ora2pg --init_project oramig
+```
 
 
 
