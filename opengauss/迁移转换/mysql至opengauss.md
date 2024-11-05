@@ -246,7 +246,7 @@ wait.timeout.second=28800
 ```
 启动source端
 ```
-sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/connect-standalone  /home/omm/portal/workspace/1/config/debezium/connect-avro-standalone.properties  /home/omm/portal/workspace/1/config/debezium/mysql-source.properties >source.log &
+sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/connect-standalone  /home/omm/portal/workspace/1/config/debezium/connect-avro-standalone-source.properties /home/omm/portal/workspace/1/config/debezium/mysql-source.properties >source.log &
 ```
 修改sink端配置文件
 ```
@@ -326,7 +326,7 @@ database.standby.ports=""
 ```
 启动sink端
 ```
-/home/omm/portal/tools/debezium/confluent-5.5.1/bin/connect-standalone /home/omm/portal/workspace/1/config/debezium/connect-avro-standalone-1.properties  /home/omm/portal/workspace/1/config/debezium/mysql-sink.properties > sink.log &
+/home/omm/portal/tools/debezium/confluent-5.5.1/bin/connect-standalone /home/omm/portal/workspace/1/config/debezium/connect-avro-standalone-sink.properties  /home/omm/portal/workspace/1/config/debezium/mysql-sink.properties > sink.log &
 ```
 
 **增量推送数据查看**
