@@ -1,7 +1,10 @@
 # 安装依赖
-root用户
+root用户安装依赖
 ```
-yum -y install perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
+yum install -y perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
+yum install perl-CPAN
+perl -MCPAN -e 'install DBI'
+perl -MCPAN -e 'install DBD::Pg'
 
 rpm -ivh oracle-instantclient19.10-basic-19.10.0.0.0-1.x86_64.rpm
 rpm -ivh oracle-instantclient19.10-devel-19.10.0.0.0-1.x86_64.rpm 
