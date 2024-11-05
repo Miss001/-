@@ -131,6 +131,11 @@ sources:
 ```
 
 ## 增量迁移-confluent（基础工具）
+- 要求：    
+  不支持skip_event, limit_table, skip_table等设置     
+  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON  
+  gtid_mode为off时product读取配置文件中的参数`snapshot.offset.gtid.set=`会报错   
+  
 启动zookeeper
 ```
 /home/omm/portal/tools/debezium/confluent-5.5.1/bin/zookeeper-server-start -daemon /home/omm/portal/tools/debezium/confluent-5.5.1/etc/kafka/zookeeper.properties
@@ -192,6 +197,52 @@ snapshot.offset.binlog.position=94254
 # 跟全量迁移chameleon配合时，取决于全量迁移后从sch_chameleon.t_replica_batch表中列executed_gtid_set中查询的gtid set
 # 需注意最大事务号需减1
 snapshot.offset.gtid.set=
+# parallel.parse.event: 新增参数，boolean类型，是否启用并行解析event能力，默认为true，表示启用并行解析能力
+# 若设置为false，则表示不启用并行解析能力，会降低在线迁移的性能
+parallel.parse.event=true
+# bigint.unsigned.handing.mode: 指定bigint unsigned数据类型的表示方式，debezium的原生参数，可选的值为long和precise。
+# long对应Java的long类型，precise对应java.math.BigDecimal类型。
+# 对于大于等于2^63的值，会超出Java的long类型的存储范围，应该使用BigDecimal存储，即设置该值为precise
+bigint.unsigned.handling.mode=precise
+# database.include.list: 指定mysql库的白名单，debezium的原生参数，String类型，默认值为空字符串，表示捕获所有数据库的变更
+# 若设置该值，则表示只捕获指定数据库的变更，多个库之间用逗号分隔
+database.include.list=test
+# commit.process.while.running：布尔值，默认为false，通过该配置项选择是否上报迁移进度
+commit.process.while.running=true
+# source.process.file.path：迁移进度文件的输出路径，只有commit.process.while.running=true时才起作用，默认在迁移插件同一目录下
+source.process.file.path=/home/omm/portal/workspace/1/status/incremental/
+# commit.time.interval：迁移进度上报的时间间隔，取int型整数，默认为1，单位：s
+commit.time.interval=1
+# create.count.info.path：记录源端日志生产起始点的文件输出路径，需与sink端的此配置项相同，默认与迁移插件在同一目录下
+create.count.info.path=/home/omm/portal/workspace/1/status/incremental/
+# process.file.count.limit：进度目录下文件数目限制值，如果进度目录下的文件数目超过该值，工具启动时会按时间从早到晚删除多余的文件，默认值为
+10
+process.file.count.limit=10
+# process.file.time.limit：进度文件保存时长，超过该时长的文件会在工具下次启动时删除，默认值为168，单位：小时
+process.file.time.limit=168
+# append.write：进度文件写入方式，true表示追加写入，false表示覆盖写入，默认值为false
+append.write=false
+# file.size.limit：文件大小限制，超过该限制值工具会另启新文件写入，默认为10，单位：兆
+file.size.limit=10
+# snapshot.locking.mode: 控制连接器在获取快照时是否允许获取全局读锁，debezium原生参数，默认值为minimal，此处需设置none，不可修改。
+# 在全量迁移阶段获取快照时设置读锁，增量迁移无需获取读锁，因此设置为none。
+snapshot.locking.mode=none
+# min.start.memory: 自定义debezium最小启动内存
+min.start.memory=256M
+# max.start.memory: 自定义debezium最大启动内存
+max.start.memory=2G
+# queue.size.limit: source端抽取binlog事件存储队列的最大长度，int类型，默认值为1000000，可自定义
+queue.size.limit=1000000
+# open.flow.control.threshold: 用于流量控制，新增参数，double类型，默认值为0.8，可自定义
+# 当存储binlog事件的某一队列长度>最大长度queue.size.limit*该门限值时，将启用流量控制，暂停抽取binlog事件
+open.flow.control.threshold=0.8
+# close.flow.control.threshold: 用于流量控制，新增参数，double类型，默认值为0.7，可自定义
+# 当存储binlog事件的各个队列长度<最大长度queue.size.limit*该门限值时，将关闭流量控制，继续抽取binlog事件
+close.flow.control.threshold=0.7
+# kafka.bootstrap.server: 自定义记录source端与sink端关联参数的Kafka启动服务器地址，可根据实际情况修改，默认值为localhost:9092
+kafka.bootstrap.server=127.0.0.1:9092
+# wait.timeout.second: 自定义JDBC连接在被服务器自动关闭之前等待活动的秒数。如果客户端在这段时间内没有向服务器发送任何请求，服务器将关闭该>连接，默认值：28800，单位：秒
+wait.timeout.second=28800
 ```
 启动source端
 ```
@@ -350,11 +401,6 @@ sh gs_mysync.sh start 1
   debezium mysql connector     
   source端：监控mysql数据库的binlog日志，并将数据（DDL和DML操作）以AVRO格式写入到kafka  
   sink端：从kafka读取AVRO格式数据（DDL和DML操作），并组装为事务，在openGauss端按照事务粒度并行回放
-   
-- 要求：  
-  不支持skip_event, limit_table, skip_table等设置   
-  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON。若gtid_mode为off，则sink端按照事务顺序串行回放，会降低在线迁移性能  
-  
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka 1
