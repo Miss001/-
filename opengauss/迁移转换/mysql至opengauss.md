@@ -134,8 +134,7 @@ sources:
 - 要求：  
   MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON   
   gtid_mode为off时product读取配置文件中的参数`snapshot.offset.gtid.set=`会报错  
-  不支持skip_event, limit_table, skip_table等设置   
-  只支持增量期间的（insert\update\delete）,迁移期间若存在dml语句任务会停止   
+  不支持skip_event, limit_table, skip_table等设置      
   
 启动zookeeper
 ```
@@ -387,7 +386,9 @@ sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
 ```
 
 ## 全量迁移-gs_mysync
-- 迁移完成后会将sch_chameleon清除
+- 实现原理：
+  使用只读模式，对所有 MySQL 表创建一个完整的快照，将数据一次性复制到 opengauss  
+  迁移完成的位移存储在：`/home/omm/portal/workspace/1/tmp/connect.offsets` 中  
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka
