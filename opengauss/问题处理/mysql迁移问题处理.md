@@ -28,7 +28,7 @@ Caused by: java.lang.StringIndexOutOfBoundsException: begin 0, end -1, length 0
 	at io.debezium.pipeline.source.AbstractSnapshotChangeEventSource.execute(AbstractSnapshotChangeEventSource.java:78)
 	... 8 more
 ```
-- 原因
+- 原因  
   mysql 未开启gtid_mode=on
 - 处理
 ```
