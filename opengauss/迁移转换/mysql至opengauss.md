@@ -400,7 +400,7 @@ sh gs_mysync.sh start 1
 - 实现原理：
   debezium mysql connector     
   source端：监控mysql数据库的binlog日志，并将数据（DDL和DML操作）以AVRO格式写入到kafka  
-  sink端：从kafka读取AVRO格式数据（DDL和DML操作），并组装为事务，在openGauss端按照事务粒度并行回放
+  sink端：从kafka读取AVRO格式数据（DDL和DML操作），并组装为事务，在openGauss端按照事务粒度并行回放   
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka 1
