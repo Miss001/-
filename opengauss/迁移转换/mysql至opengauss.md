@@ -132,8 +132,7 @@ sources:
 
 ## 增量迁移-confluent（基础工具）
 - 要求：  
-  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON   
-  gtid_mode为off时product读取配置文件中的参数`snapshot.offset.gtid.set=`会报错  
+  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON    
   不支持skip_event, limit_table, skip_table等设置      
   
 启动zookeeper
