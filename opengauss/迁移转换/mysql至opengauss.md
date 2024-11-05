@@ -193,10 +193,10 @@ transforms.route.replacement=mysql_server_1_topic
 snapshot.offset.binlog.filename=binlog.000009
 # snapshot.offset.binlog.position: 新增参数，自定义配置快照点的binlog位置
 # 跟全量迁移chameleon配合时，取决于全量迁移后从sch_chameleon.t_replica_batch表中列i_binlog_position中查询的binlog位置
-snapshot.offset.binlog.position=94254
+snapshot.offset.binlog.position=197
 # 跟全量迁移chameleon配合时，取决于全量迁移后从sch_chameleon.t_replica_batch表中列executed_gtid_set中查询的gtid set
 # 需注意最大事务号需减1
-snapshot.offset.gtid.set=
+snapshot.offset.gtid.set=68cd6c30-8c2c-11ef-8046-000c29da35cb:1
 # parallel.parse.event: 新增参数，boolean类型，是否启用并行解析event能力，默认为true，表示启用并行解析能力
 # 若设置为false，则表示不启用并行解析能力，会降低在线迁移的性能
 parallel.parse.event=true
@@ -336,7 +336,7 @@ sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/kafka-topics --list --boo
 #删除创建的topic
 sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/kafka-topics --delete --bootstrap-server 127.0.0.1:9092 --topic topic_name
 #查看推送的数据
-sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/kafka-console-consumer --bootstrap-server 127.0.0.1:9092  --topic __consumer_offsets --from-beginning --max-messages 10
+sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/kafka-console-consumer --bootstrap-server 127.0.0.1:9092  --topic mysql_server_1_topic --from-beginning --max-messages 10
 ```
 
 ## 集成工具gs_rep_portal迁移
