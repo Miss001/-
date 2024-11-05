@@ -56,6 +56,8 @@ set global gtid_mode=on;
 gtid_mode = on
 enforce-gtid-consistency=on
 ```
-<font color="red">未启用gtid时增量迁移失败。 </font>    
-<font color="red">全量迁移前才开启gtid.全量迁移正常运行，增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss，将表数据全清空，重建表测试后consumer消费正常。 </font>     
-<font color="red">原因暂不明 </font>    
+## 遗留问题
+### 未启用gtid时增量迁移失败
+### 全量迁移前才开启gtid,全量迁移正常运行,增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss;将表数据全清空,重建表测试后consumer消费正常   
+### 迁移后navicate编辑表结构报错
+![image](https://github.com/user-attachments/assets/54775971-790b-4c97-9a47-2d15416e9064)
