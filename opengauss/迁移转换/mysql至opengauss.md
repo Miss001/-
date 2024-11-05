@@ -131,10 +131,11 @@ sources:
 ```
 
 ## 增量迁移-confluent（基础工具）
-- 要求：    
-  不支持skip_event, limit_table, skip_table等设置     
-  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON  
-  gtid_mode为off时product读取配置文件中的参数`snapshot.offset.gtid.set=`会报错   
+- 要求：  
+  MySQL参数设置要求为：log_bin=ON, binlog_format=ROW, binlog_row_image=FULL, gtid_mode = ON   
+  gtid_mode为off时product读取配置文件中的参数`snapshot.offset.gtid.set=`会报错  
+  不支持skip_event, limit_table, skip_table等设置   
+  只支持增量期间的（insert\update\delete）,迁移期间若存在dml语句任务会停止   
   
 启动zookeeper
 ```
@@ -166,7 +167,7 @@ database.password=123456
 # database.server.id: mysql数据库实例id，debezium的原生参数，取值为一个随机数，作为数据库的客户端id
 # 连接器以该id加入MySQL集群，以便读取binlog，默认情况下，会生成5400到6400之间的一个随机数，建议显式设置该值
 # 针对在当前MySQL集群指定的客户端id，该值必须唯一
-database.server.id=12260
+database.server.id=47786
 # database.server.name: mysql数据库实例名称，debezium的原生参数，无默认值，可自定义
 database.server.name=mysql_server_1
 # database.history.kafka.bootstrap.servers: kafka服务器地址，debezium的原生参数，无默认值，根据实际自定义修改
@@ -179,6 +180,9 @@ include.schema.changes=true
 tasks.max=1
 # snapshot.mode：快照模式，debezium的原生参数，默认值为initial，此处需设置为schema_only，不可修改
 snapshot.mode=schema_only
+# provide.transaction.metadata: 指定连接器是否存储事务元数据信息，debezium的原生参数，boolean类型，配置为true时并行回放模式为按事务并行回放，配置为false时并行回放模式为按表并行回放，默认为false
+provide.transaction.metadata=false
+# transforms: kafka topic路由转发名称，debezium提供topic路由能力，不可修改
 transforms=route
 # transforms.route.type: kafka topic路由转发类型，debezium提供topic路由能力，不可修改
 transforms.route.type=org.apache.kafka.connect.transforms.RegexRouter
@@ -190,13 +194,14 @@ transforms.route.regex=^mysql_server_1(.*)
 transforms.route.replacement=mysql_server_1_topic
 # snapshot.offset.binlog.filename: 新增参数，自定义配置快照点的binlog文件名
 # 跟全量迁移chameleon配合时，取决于全量迁移后从sch_chameleon.t_replica_batch表中列t_binlog_name中查询的binlog文件名
-snapshot.offset.binlog.filename=binlog.000009
+snapshot.offset.binlog.filename=
 # snapshot.offset.binlog.position: 新增参数，自定义配置快照点的binlog位置
 # 跟全量迁移chameleon配合时，取决于全量迁移后从sch_chameleon.t_replica_batch表中列i_binlog_position中查询的binlog位置
-snapshot.offset.binlog.position=197
+snapshot.offset.binlog.position=0
+# snapshot.offset.gtid.set: 新增参数，自定义配置快照点的Executed_Gtid_Set
 # 跟全量迁移chameleon配合时，取决于全量迁移后从sch_chameleon.t_replica_batch表中列executed_gtid_set中查询的gtid set
 # 需注意最大事务号需减1
-snapshot.offset.gtid.set=68cd6c30-8c2c-11ef-8046-000c29da35cb:1
+snapshot.offset.gtid.set=
 # parallel.parse.event: 新增参数，boolean类型，是否启用并行解析event能力，默认为true，表示启用并行解析能力
 # 若设置为false，则表示不启用并行解析能力，会降低在线迁移的性能
 parallel.parse.event=true
@@ -215,8 +220,7 @@ source.process.file.path=/home/omm/portal/workspace/1/status/incremental/
 commit.time.interval=1
 # create.count.info.path：记录源端日志生产起始点的文件输出路径，需与sink端的此配置项相同，默认与迁移插件在同一目录下
 create.count.info.path=/home/omm/portal/workspace/1/status/incremental/
-# process.file.count.limit：进度目录下文件数目限制值，如果进度目录下的文件数目超过该值，工具启动时会按时间从早到晚删除多余的文件，默认值为
-10
+# process.file.count.limit：进度目录下文件数目限制值，如果进度目录下的文件数目超过该值，工具启动时会按时间从早到晚删除多余的文件，默认值为10
 process.file.count.limit=10
 # process.file.time.limit：进度文件保存时长，超过该时长的文件会在工具下次启动时删除，默认值为168，单位：小时
 process.file.time.limit=168
@@ -241,7 +245,7 @@ open.flow.control.threshold=0.8
 close.flow.control.threshold=0.7
 # kafka.bootstrap.server: 自定义记录source端与sink端关联参数的Kafka启动服务器地址，可根据实际情况修改，默认值为localhost:9092
 kafka.bootstrap.server=127.0.0.1:9092
-# wait.timeout.second: 自定义JDBC连接在被服务器自动关闭之前等待活动的秒数。如果客户端在这段时间内没有向服务器发送任何请求，服务器将关闭该>连接，默认值：28800，单位：秒
+# wait.timeout.second: 自定义JDBC连接在被服务器自动关闭之前等待活动的秒数。如果客户端在这段时间内没有向服务器发送任何请求，服务器将关闭该连接，默认值：28800，单位：秒
 wait.timeout.second=28800
 ```
 启动source端
@@ -251,6 +255,8 @@ sh /home/omm/portal/tools/debezium/confluent-5.5.1/bin/connect-standalone  /home
 修改sink端配置文件
 ```
 # name: source端连接器名称，debezium的原生参数，无默认值，可自定义，不同连接器需保证名称的唯一性
+name=mysql-sink-1
+# connector.class: 连接器的启动类，debezium的原生参数，无默认值，示例中的值为mysql sink connector对应的类名，不可修改
 connector.class=io.debezium.connector.mysql.sink.MysqlSinkConnector
 # tasks.max: 连接器创建的最大任务数，debezium的原生参数，默认值为1，MySQL connector通常为单任务，不建议修改
 tasks.max=1
@@ -288,8 +294,7 @@ commit.time.interval=1
 fail.sql.path=/home/omm/portal/workspace/1/status/incremental/
 # create.count.info.path：记录源端日志生产起始点的文件读取路径，需与source端的此配置项相同，默认与迁移插件在同一目录下
 create.count.info.path=/home/omm/portal/workspace/1/status/incremental/
-# process.file.count.limit：进度目录下文件数目限制值，如果进度目录下的文件数目超过该值，工具启动时会按时间从早到晚删除多余的文件，默认值为
-10
+# process.file.count.limit：进度目录下文件数目限制值，如果进度目录下的文件数目超过该值，工具启动时会按时间从早到晚删除多余的文件，默认值为10
 process.file.count.limit=10
 # process.file.time.limit：进度文件保存时长，超过该时长的文件会在工具下次启动时删除，默认值为168，单位：小时
 process.file.time.limit=168
@@ -311,17 +316,17 @@ record.breakpoint.kafka.topic=mysql_bp_1_topic
 record.breakpoint.kafka.attempts=3
 #record.breakpoint.kafka.bootstrap.servers:kafka服务器地址，可根据实际情况修改，默认值为localhost:9092
 record.breakpoint.kafka.bootstrap.servers=127.0.0.1:9092
-#record.breakpoint.kafka.size.limit：断点记录Kafka的条数限制，超过该限制会触发删除Kafka的断点清除策略，删除无用的断点记录数据，单位：事务>万条数
+#record.breakpoint.kafka.size.limit：断点记录Kafka的条数限制，超过该限制会触发删除Kafka的断点清除策略，删除无用的断点记录数据，单位：事务万条数
 record.breakpoint.kafka.size.limit=3000
-#record.breakpoint.kafka.clear.interval：断点记录Kafka的时间限制，超过该限制会触发删除Kafka的断点清除策略，删除无用的断点记录数据，单位：>小时
+#record.breakpoint.kafka.clear.interval：断点记录Kafka的时间限制，超过该限制会触发删除Kafka的断点清除策略，删除无用的断点记录数据，单位：小时
 record.breakpoint.kafka.clear.interval=1
 # record.breakpoint.repeat.count.limit：断点续传时，查询待回放数据是否已在断点之前备回放的数据条数，默认值：50000
 record.breakpoint.repeat.count.limit=50000
 # wait.timeout.second：sink端数据库停止服务后迁移工具等待数据库恢复服务的最大时长，默认值：28800，单位：秒
 wait.timeout.second=28800
-# database.standby.hostnames：sink端数据库是主备部署时的备机ip列表，用逗号隔开，需与port列表一一对应，此配置项只对sink端是openGauss时起作>用，默认值：""，不配置此项时sink端只连接主节点
+# database.standby.hostnames：sink端数据库是主备部署时的备机ip列表，用逗号隔开，需与port列表一一对应，此配置项只对sink端是openGauss时起作用，默认值：""，不配置此项时sink端只连接主节点
 database.standby.hostnames=""
-# database.standby.ports：sink端数据库是主备部署时的备机port列表，用逗号隔开，需与ip列表一一对应，此配置项只对sink端是openGauss时起作用，>默认值：""，不配置此项时sink端只连接主节点
+# database.standby.ports：sink端数据库是主备部署时的备机port列表，用逗号隔开，需与ip列表一一对应，此配置项只对sink端是openGauss时起作用，默认值：""，不配置此项时sink端只连接主节点
 database.standby.ports=""
 ```
 启动sink端
