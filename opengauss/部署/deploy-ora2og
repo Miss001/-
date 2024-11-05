@@ -1,6 +1,29 @@
 # 安装依赖
-安装oracle客户端
+root用户安装
+- 安装基础依赖
 ```
+yum install -y perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
+yum install perl-CPAN
+perl -MCPAN -e 'install DBI'
+```
+- 安装依赖： DBD::Pg
+```
+-------配置-----
+ln -s /opt/openGauss/install/app/include/postgresql/server/libpq/libpq-fe.h /opt/openGauss/install/app/include/postgresql/server/libpq-fe.h
+
+-------安装依赖-----
+perl -MCPAN -e 'install DBD::Pg'
+#pg_config: /opt/openGauss/install/app/bin/
+#verions: 9
+#verions: 9
+#verions: 9
+#bin path: /opt/openGauss/install/app/bin/
+#include path: /opt/openGauss/install/app/include/postgresql/server/
+#library path: /opt/openGauss/install/app/lib/
+```
+- 安装依赖：DBD::Oracle
+```
+-------安装oracle客户端-----
 #rpm包下载地址
 https://yum.oracle.com/repo/OracleLinux/OL7/oracle/instantclient21/x86_64/
 #rpm安装
@@ -16,28 +39,26 @@ export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
 export PATH=$ORACLE_HOME/bin:$PATH
 #使变量生效
 source /root/.bash_profile
-```
-安装postgre9.2.4
 
-root用户安装依赖
-```
-yum install -y perl-ExtUtils-CBuilder perl-ExtUtils-MakeMaker perl-Time-HiRes perl-devel perl-DBI perl-Compress-Zlib perl-open
-yum install perl-CPAN
-perl -MCPAN -e 'install DBI'
-perl -MCPAN -e 'install DBD::Pg'
-#pg_config: /opt/openGauss/install/app/bin/
-#verions: 9
-#verions: 9
-#verions: 9
-#bin path: /opt/openGauss/install/app/bin/
-#include path: /opt/openGauss/install/app/include/postgresql/server/
-#library path: /opt/openGauss/install/app/lib/
+-------安装依赖-----
 perl -MCPAN -e 'install DBD::Oracle'
 ```
 
-/opt/openGauss/install/app/: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
-
-安装包下载编译
+# 安装包下载编译
 ```
+#下载解压
 wget https://gitee.com/opengauss/openGauss-tools-ora2og/repository/archive/master.zip
+unzip master.zip
+cd openGauss-tools-ora2og-master
+#编译安装
+perl Makefile.PL PREFIX=/home/omm/ora2og
+make && make install
+# 设置环境变量
+vi /root/.bash_profile
+export PERL5LIB=/home/omm/openGauss-tools-ora2og-master/lib
+export PATH=$PATH:/home/omm/ora2og/root/perl5/bin
+#使变量生效
+source /root/.bash_profile
+#测试使用
+ora2pg --help
 ```
