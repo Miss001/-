@@ -56,8 +56,6 @@ set global gtid_mode=on;
 gtid_mode = on
 enforce-gtid-consistency=on
 ```
-<!--   
-未启用gtid时增量迁移失败。    
-全量迁移前才开启gtid.全量迁移正常运行，增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss，将表数据全清空，重建表测试后consumer消费正常。    
-原因暂不明  
--->  
+[//]: # 未启用gtid时增量迁移失败。    
+[//]: #全量迁移前才开启gtid.全量迁移正常运行，增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss，将表数据全清空，重建表测试后consumer消费正常。    
+[//]: #原因暂不明  
