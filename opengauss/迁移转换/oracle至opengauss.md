@@ -149,3 +149,8 @@ sh import_all.sh -d oraclemode_db -o root -w root@@123 -h 192.168.131.128 -p 154
 ```
 ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_user root
 ```
+
+# 增量迁移
+```
+ora2pg -c ora2pg.conf -t COPY --scn "TO_TIMESTAMP('2021-12-01 00:00:00', 'YYYY-MM-DD HH:MI:SS')"
+```
