@@ -61,7 +61,35 @@ ORACLE_HOME     /usr/lib/oracle/21/client64
 # Set Oracle database connection (datasource, user, password)
 ORACLE_DSN      dbi:Oracle:host=192.168.131.135;sid=helowin;port=1521
 ORACLE_USER     root
-ORACLE_PWD      root@@123
+ORACLE_PWD      123456
+
+#------------------------------------------------------------------------------
+# SCHEMA SECTION (Oracle schema to export and use of schema in PostgreSQL)
+#------------------------------------------------------------------------------
+
+# Export Oracle schema to PostgreSQL schema
+EXPORT_SCHEMA   0
+
+# Oracle schema/owner to use
+SCHEMA  ROOT
+
+# By default if you set EXPORT_SCHEMA to 1 the PostgreSQL search_path will be
+# set to the schema name exported set as value of the SCHEMA directive. You can
+# defined/force the PostgreSQL schema to use by using this directive.
+#
+# The value can be a comma delimited list of schema but not when using TABLE
+# export type because in this case it will generate the CREATE SCHEMA statement
+# and it doesn't support multiple schema name. For example, if you set PG_SCHEMA
+# to something like "user_schema, public", the search path will be set like this
+#        SET search_path = user_schema, public;
+# forcing the use of an other schema (here user_schema) than the one from Oracle
+# schema set in the SCHEMA directive. You can also set the default search_path
+# for the PostgreSQL user you are using to connect to the destination database
+# by using:
+#        ALTER ROLE username SET search_path TO user_schema, public;
+#in this case you don't have to set PG_SCHEMA.
+PG_SCHEME test
+
 
 #------------------------------------------------------------------------------
 # OUTPUT SECTION (Control output to file or PostgreSQL database)
@@ -84,6 +112,10 @@ OUTPUT          output.sql
 
 # Base directory where all dumped files must be written
 OUTPUT_DIR      /home/omm/ora2og/oramig/output
+```
+测试连接
+```
+ora2pg -t SHOW_VERSION -c config/ora2pg.conf
 ```
 
 
