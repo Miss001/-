@@ -42,7 +42,7 @@ cd /home/omm/ora2og
 ora2pg --init_project root2test
 ```
 修改配置文件  
-vi /home/omm/ora2og/oramig/config/ora2pg.conf
+vi /home/omm/ora2og/root2test/config/ora2pg.conf
 ```
 #------------------------------------------------------------------------------
 # INPUT SECTION (Oracle connection or input file)
@@ -111,11 +111,33 @@ PG_PWD          root@@123
 OUTPUT          output.sql
 
 # Base directory where all dumped files must be written
-OUTPUT_DIR      /home/omm/ora2og/oramig/output
+OUTPUT_DIR      /home/omm/ora2og/root2test/output
 ```
 测试连接
 ```
+cd /home/omm/ora2og/root2test
 ora2pg -t SHOW_VERSION -c config/ora2pg.conf
 ```
+导出对象结构:生成的迁移报告在 reports目录下
+```
+cd /home/omm/ora2og/root2test
+sh export_schema.sh
+```
+导入对象结构至opengauss中
+```
+su - omm
+cd /home/omm/ora2og/root2test
+sh import_all.sh -d oraclemode_db -o root -h 192.168.131.128 -p root@@123 -f
+```
 
+导出数据 -o data.sql -b ./data
+```
+cd /home/omm/ora2og/root2test
+ora2pg -t COPY -o data.sql -b ./data -c ./config/ora2pg.conf
 
+```
+导入数据至opengauss中
+```
+cd /home/omm/ora2og/root2test
+
+```
