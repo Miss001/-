@@ -60,7 +60,7 @@ wget https://gitee.com/opengauss/openGauss-tools-ora2og/repository/archive/maste
 unzip master.zip
 cd openGauss-tools-ora2og-master
 #编译安装
-perl Makefile.PL PREFIX=/home/omm/ora2og
+perl Makefile.PL
 make && make install
 ```
 
@@ -68,7 +68,7 @@ make && make install
 ```
 vi /root/.bash_profile
 export PERL5LIB=/home/omm/openGauss-tools-ora2og-master/lib
-export PATH=$PATH:/home/omm/ora2og/root/perl5/bin
+export PATH=$PATH:/root/perl5/bin/ora2pg/bin
 #使变量生效
 source /root/.bash_profile
 ```
