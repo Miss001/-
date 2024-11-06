@@ -67,7 +67,7 @@ make && make install
 # 设置环境变量
 ```
 vi /root/.bash_profile
-export PERL5LIB=/home/omm/openGauss-tools-ora2og-master/lib
+export PERL5LIB=/root/perl5/lib/perl5
 export PATH=$PATH:/root/perl5/bin/ora2pg/bin
 #使变量生效
 source /root/.bash_profile
