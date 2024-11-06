@@ -36,6 +36,7 @@
 ## ora2og
 - 原理：基于Ora2Pg优化，通过连接Oracle数据库，自动扫描并提取其中的对象结构及数据，产生SQL脚本，通过手动或自动的方式将其应用到opengauss
 ### 全量迁移
+root用户执行，omm无权限执行perl
 - 创建迁移项目
 ```
 cd /home/omm/ora2og
@@ -138,21 +139,13 @@ IMPORT_CONSTRAINTS=0
 NO_DBCHECK=0
 OPENGAUSS=1
 ```
-执行导入
+- 执行导入
 ```
-su - omm
 cd /home/omm/ora2og/root2test
+#此命令会通过交互式按顺序导入表结构索引等。最后导入数据。
 sh import_all.sh -d oraclemode_db -o root -w root@@123 -h 192.168.131.128 -p 15400 -f
 ```
-
-导出数据 -o data.sql -b ./data
+- 导入数据
 ```
-cd /home/omm/ora2og/root2test
-ora2pg -t COPY -o data.sql -b ./data -c ./config/ora2pg.conf
-
-```
-导入数据至opengauss中
-```
-cd /home/omm/ora2og/root2test
-
+ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_user root
 ```
