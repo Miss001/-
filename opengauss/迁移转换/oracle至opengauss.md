@@ -39,7 +39,7 @@
 创建迁移项目
 ```
 cd /home/omm/ora2og
-ora2pg --init_project oramig
+ora2pg --init_project root2test
 ```
 修改配置文件  
 vi /home/omm/ora2og/oramig/config/ora2pg.conf
