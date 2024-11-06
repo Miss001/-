@@ -36,12 +36,12 @@
 ## ora2og
 - 原理：基于Ora2Pg优化，通过连接Oracle数据库，自动扫描并提取其中的对象结构及数据，产生SQL脚本，通过手动或自动的方式将其应用到opengauss
 ### 全量迁移
-创建迁移项目
+- 创建迁移项目
 ```
 cd /home/omm/ora2og
 ora2pg --init_project root2test
 ```
-修改配置文件  
+- 修改配置文件  
 vi /home/omm/ora2og/root2test/config/ora2pg.conf
 ```
 #------------------------------------------------------------------------------
@@ -113,21 +113,36 @@ OUTPUT          output.sql
 # Base directory where all dumped files must be written
 OUTPUT_DIR      /home/omm/ora2og/root2test/output
 ```
-测试连接
+- 测试连接
 ```
 cd /home/omm/ora2og/root2test
 ora2pg -t SHOW_VERSION -c config/ora2pg.conf
 ```
-导出对象结构:生成的迁移报告在 reports目录下
+- 导出对象结构:生成的迁移报告在 reports目录下
 ```
 cd /home/omm/ora2og/root2test
 sh export_schema.sh
 ```
-导入对象结构至opengauss中
+- 导入对象结构至opengauss中  
+修改import_all.sh
+```
+EXPORT_TYPE="TYPE SEQUENCE TABLE PACKAGE VIEW GRANT TRIGGER FUNCTION PROCEDURE TABLESPACE PARTITION MVIEW DBLINK SYNONYM DIRECTORY"
+AUTORUN=0
+NAMESPACE=.
+NO_CONSTRAINTS=0
+IMPORT_INDEXES_AFTER=0
+DEBUG=0
+IMPORT_SCHEMA=0
+IMPORT_DATA=0
+IMPORT_CONSTRAINTS=0
+NO_DBCHECK=0
+OPENGAUSS=1
+```
+执行导入
 ```
 su - omm
 cd /home/omm/ora2og/root2test
-sh import_all.sh -d oraclemode_db -o root -h 192.168.131.128 -p root@@123 -f
+sh import_all.sh -d oraclemode_db -o root -w root@@123 -h 192.168.131.128 -p 15400 -f
 ```
 
 导出数据 -o data.sql -b ./data
