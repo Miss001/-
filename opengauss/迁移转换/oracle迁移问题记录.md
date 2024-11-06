@@ -16,5 +16,5 @@ ERROR: an error occurs when importing file ./schema/tables/table.sql
 ```
 - 报错原因  
 分区表导入时，ora2pg会将语法转为postgresql语法而不是兼容oracle的opengauss语法。
-- 处理
+- 处理  
 手动调整建表语句
