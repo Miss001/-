@@ -49,7 +49,7 @@ export PATH=$ORACLE_HOME/bin:$PATH
 source /root/.bash_profile
 
 -------安装依赖-----
-sudo cpan Test::NoWarnings
+perl -MCPAN -e 'install Test::NoWarnings'
 perl -MCPAN -e 'install DBD::Oracle'
 ```
 
