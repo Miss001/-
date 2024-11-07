@@ -78,5 +78,5 @@ Perl 处理 UTF-8 字符时未正确设置编码，导致宽字符（如中文�
 ```
 CREATE DATABASE dbname WITH ENCODING = 'UTF8';
 ```
-#5.遗留问题
+# 5.遗留问题
 ## 导入数据时若oracle的schema与opengauss的schema不一致会导致查询表不存在
