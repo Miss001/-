@@ -64,6 +64,9 @@ ORACLE_DSN      dbi:Oracle:host=192.168.131.135;sid=helowin;port=1521
 ORACLE_USER     root
 ORACLE_PWD      123456
 
+# Trace all to stderr
+DEBUG           1
+
 #------------------------------------------------------------------------------
 # SCHEMA SECTION (Oracle schema to export and use of schema in PostgreSQL)
 #------------------------------------------------------------------------------
@@ -112,7 +115,16 @@ PG_PWD          root@@123
 OUTPUT          output.sql
 
 # Base directory where all dumped files must be written
-OUTPUT_DIR      /home/omm/ora2og/root2test/output
+OUTPUT_DIR      /home/omm/ora2og/root2test/tmp
+
+#------------------------------------------------------------------------------
+# POSTGRESQL FEATURE SECTION (Control which PostgreSQL features are available)
+#------------------------------------------------------------------------------
+
+# Set the PostgreSQL major version number of the target database. Ex: 9.6 or 10
+# Default is current major version at time of a new release. This replace the
+# old PG_SUPPORTS_* configuration directives.
+PG_VERSION	9.2
 ```
 - 测试连接
 ```
@@ -123,16 +135,50 @@ ora2pg -t SHOW_VERSION -c config/ora2pg.conf
 ```
 cd /home/omm/ora2og/root2test
 sh export_schema.sh
+#导出序列
+#ora2pg -p -t SEQUENCE -o sequence.sql -b ./schema/sequences -c ./config/ora2pg.conf
+#导出表、索引
+#ora2pg -p -t TABLE -o table.sql -b ./schema/tables -c ./config/ora2pg.conf
+#导出包
+#ora2pg -p -t PACKAGE -o package.sql -b ./schema/packages -c ./config/ora2pg.conf
+#导出视图
+#ora2pg -p -t VIEW -o view.sql -b ./schema/views -c ./config/ora2pg.conf
+#导出权限
+#ora2pg -p -t GRANT -o grant.sql -b ./schema/grants -c ./config/ora2pg.conf
+#导出触发器
+#ora2pg -p -t TRIGGER -o trigger.sql -b ./schema/triggers -c ./config/ora2pg.conf
+#导出函数
+#ora2pg -p -t FUNCTION -o function.sql -b ./schema/functions -c ./config/ora2pg.conf
+#导出存储过程
+#ora2pg -p -t PROCEDURE -o procedure.sql -b ./schema/procedures -c ./config/ora2pg.conf
+#导出表空间
+#ora2pg -p -t TABLESPACE -o tablespace.sql -b ./schema/tablespaces -c ./config/ora2pg.conf
+#导出分区
+#ora2pg -p -t PARTITION -o partition.sql -b ./schema/partitions -c ./config/ora2pg.conf
+#导出type
+#ora2pg -p -t TYPE -o type.sql -b ./schema/types -c ./config/ora2pg.conf
+#导出物化视图
+#ora2pg -p -t MVIEW -o mview.sql -b ./schema/mviews -c ./config/ora2pg.conf
+#导出dblink
+#ora2pg -p -t DBLINK -o dblink.sql -b ./schema/dblinks -c ./config/ora2pg.conf
+#导出同义词
+#ora2pg -p -t SYNONYM -o synonym.sql -b ./schema/synonyms -c ./config/ora2pg.conf
+#导出字典
+#ora2pg -p -t DIRECTORY -o directorie.sql -b ./schema/directories -c ./config/ora2pg.conf
+
+ora2pg -t MVIEW -o mview.sql -b ./sources/mviews -c ./config/ora2pg.conf
+#ora2pg -p -t TABLE -o table.sql -b ./schema/tables -c ./config/ora2pg.conf
+
 ```
 - 导入对象结构至opengauss中  
 修改import_all.sh
 ```
-EXPORT_TYPE="TYPE SEQUENCE TABLE PACKAGE VIEW GRANT TRIGGER FUNCTION PROCEDURE TABLESPACE PARTITION MVIEW DBLINK SYNONYM DIRECTORY"
+EXPORT_TYPE="SEQUENCE TABLE VIEW GRANT TRIGGER FUNCTION PROCEDURE PARTITION "
 AUTORUN=0
 NAMESPACE=.
 NO_CONSTRAINTS=0
 IMPORT_INDEXES_AFTER=0
-DEBUG=0
+DEBUG=1
 IMPORT_SCHEMA=0
 IMPORT_DATA=0
 IMPORT_CONSTRAINTS=0
@@ -147,6 +193,7 @@ sh import_all.sh -d oraclemode_db -o root -w root@@123 -h 192.168.131.128 -p 154
 ```
 - 导入数据
 ```
+ora2pg -t COPY -o data.sql -b ./data -c ./config/ora2pg.conf
 ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_user root
 ```
 
