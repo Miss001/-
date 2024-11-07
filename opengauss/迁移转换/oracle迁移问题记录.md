@@ -52,4 +52,5 @@ DBD::Pg::db do failed: ERROR:  relation "emp_bonus" does not exist at /root/perl
 [2024-11-06 20:18:07] FATAL: ERROR:  relation "emp_bonus" does not exist
 ```
 - 报错原因
+ora2pg默认从public 中查询表，配置文件中的PG_SCHEMA不生效
 - 处理
