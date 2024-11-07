@@ -34,7 +34,7 @@
 
 # 迁移工具
 ## ora2og
-- 原理：基于Ora2Pg优化，通过连接Oracle数据库，自动扫描并提取其中的对象结构及数据，产生SQL脚本，通过手动或自动的方式将其应用到opengauss
+- 原理：基于Ora2Pg开发扩展，通过连接Oracle数据库，自动扫描并提取其中的对象结构及数据，产生SQL脚本，通过手动或自动的方式将其应用到opengauss
 ### 全量迁移
 root用户执行，omm无权限执行perl
 - 创建迁移项目
@@ -66,7 +66,7 @@ EXPORT_SCHEMA	1
 SCHEMA	ROOT
 CREATE_SCHEMA  0
 COMPILE_SCHEMA	1
-PG_SCHEME  test
+PG_SCHEME  test,public
 
 #------------------------------------------------------------------------------
 # OUTPUT SECTION (Control output to file or PostgreSQL database)
@@ -143,11 +143,14 @@ chown -R omm:dbgrp ora2og/
 su - omm
 #此命令会通过交互式按顺序导入表结构索引等，导入数据需要切换用户执行ora2pg
 sh import_all.sh -h 192.168.131.128 -p 15400 -o root -w root@@123 -d oraclemode_db -n test -f
+# 导入单独的对象
+gsql --single-transaction  -h 192.168.131.128 -p 15400 -U root -W root@@123 -d oraclemode_db -f ./schema/functions/function.sql
 ```
 - 导入数据
 ```
 ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_schema root --pg_user root
 ```
+
 
 # 增量迁移
 ```
