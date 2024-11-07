@@ -146,6 +146,13 @@ PG_VERSION	9.2
 cd /home/omm/ora2og
 ora2pg -t SHOW_VERSION -c config/ora2pg.conf
 ```
+- 修改导出对象
+cd /home/omm/ora2og  
+vi  export_schema.sh
+```
+EXPORT_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
+SOURCE_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
+```
 - 导出对象结构:生成的迁移报告在 reports目录下
 ```
 cd /home/omm/ora2og
@@ -184,34 +191,21 @@ sh export_schema.sh
 - 导入对象结构至opengauss中  
 修改import_all.sh
 ```
-EXPORT_TYPE="SEQUENCE TABLE VIEW GRANT TRIGGER FUNCTION PROCEDURE PARTITION "
-AUTORUN=0
-NAMESPACE=.
-NO_CONSTRAINTS=0
-IMPORT_INDEXES_AFTER=0
-DEBUG=0
-IMPORT_SCHEMA=0
-IMPORT_DATA=0
-IMPORT_CONSTRAINTS=0
-NO_DBCHECK=0
+EXPORT_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
 OPENGAUSS=1
 ```
-- 执行导入
+- 执行导入结构
 ```
 cd /home/omm
 chown -R omm:dbgrp ora2og/
 #使用omm 运行gsql导入对象
 su - omm
-#此命令会通过交互式按顺序导入表结构索引等
+#此命令会通过交互式按顺序导入表结构索引等，导入数据需要切换用户执行ora2pg
 sh import_all.sh -h 192.168.131.128 -p 15400 -o root -w root@@123 -d oraclemode_db -n test -f
-```
-- 导出数据
-```
-ora2pg -p -t DATA -o data.sql -b ./data -c ./config/ora2pg.conf
 ```
 - 导入数据
 ```
-ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_schema test --pg_user root
+ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_schema root --pg_user root
 ```
 
 # 增量迁移
