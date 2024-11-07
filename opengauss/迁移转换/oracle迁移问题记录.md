@@ -19,6 +19,20 @@ ERROR: an error occurs when importing file ./schema/tables/table.sql
 - 处理  
 手动调整建表语句
 
+# 2.分区表导入错误
+- 报错信息
+```
+gsql:./schema/partitions/partition.sql:27: ERROR:  syntax error at or near "MAXVALUE"
+LINE 2: ...1 00:00:00','SYYYY-MM-DD HH24:MI:SS') AND DATES < MAXVALUE A...
+                                                             ^
+total time: 26  ms
+ERROR: an error occurs when importing file ./schema/partitions/partition.sql.
+```
+- 报错原因
+分区表导出时，ora2pg转换为继承表，不存在maxvalue值
+- 处理
+手动调整建表语句
+
 # 2.导入表数据表不存在，实际数据库存在表
 - 报错信息
 ```
