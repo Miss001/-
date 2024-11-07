@@ -54,13 +54,13 @@ DBD::Pg::db do failed: ERROR:  relation "emp_bonus" does not exist at /root/perl
 - 报错原因   
 ora2pg默认从public 中查询表，配置文件中的PG_SCHEMA不生效
 - 处理   
-修改配置文件ora2pg.conf
+修改配置文件ora2pg.conf，在sql脚本开头设置search_path
 ```
 EXPORT_SCHEMA	1
 SCHEMA	ROOT
 CREATE_SCHEMA  0
 COMPILE_SCHEMA	1
-PG_SCHEME  test
+#PG_SCHEME  test
 ```
 
 # 4.导入数据字符集错误
@@ -78,3 +78,5 @@ Perl 处理 UTF-8 字符时未正确设置编码，导致宽字符（如中文�
 ```
 CREATE DATABASE dbname WITH ENCODING = 'UTF8';
 ```
+#5.遗留问题
+## 导入数据时若oracle的schema与opengauss的schema不一致会导致查询表不存在
