@@ -39,11 +39,11 @@
 root用户执行，omm无权限执行perl
 - 创建迁移项目
 ```
-cd /home/omm/ora2og
-ora2pg --init_project root2test
+cd /home/omm
+ora2pg --init_project ora2og
 ```
 - 修改配置文件  
-vi /home/omm/ora2og/root2test/config/ora2pg.conf
+vi /home/omm/ora2og/config/ora2pg.conf
 ```
 #------------------------------------------------------------------------------
 # INPUT SECTION (Oracle connection or input file)
@@ -67,15 +67,30 @@ ORACLE_PWD      123456
 # Trace all to stderr
 DEBUG           1
 
+
 #------------------------------------------------------------------------------
 # SCHEMA SECTION (Oracle schema to export and use of schema in PostgreSQL)
 #------------------------------------------------------------------------------
 
 # Export Oracle schema to PostgreSQL schema
-EXPORT_SCHEMA   0
+EXPORT_SCHEMA	1
 
 # Oracle schema/owner to use
-SCHEMA  ROOT
+SCHEMA	ROOT
+
+# Enable/disable the CREATE SCHEMA SQL order at starting of the output file.
+# It is enable by default and concern on TABLE export type.
+CREATE_SCHEMA  0
+
+# Enable this directive to force Oracle to compile schema before exporting code.
+# When this directive is enabled and SCHEMA is set to a specific schema name, 
+# only invalid objects in this schema will be recompiled. If SCHEMA is not set
+# then all schema will be recompiled. To force recompile invalid object in a
+# specific schema, set COMPILE_SCHEMA to the schema name you want to recompile.
+# This will ask to Oracle to validate the PL/SQL that could have been invalidate
+# after a export/import for example. The 'VALID' or 'INVALID' status applies to
+# functions, procedures, packages and user defined types.
+COMPILE_SCHEMA	1
 
 # By default if you set EXPORT_SCHEMA to 1 the PostgreSQL search_path will be
 # set to the schema name exported set as value of the SCHEMA directive. You can
@@ -92,7 +107,7 @@ SCHEMA  ROOT
 # by using:
 #        ALTER ROLE username SET search_path TO user_schema, public;
 #in this case you don't have to set PG_SCHEMA.
-PG_SCHEME test
+PG_SCHEME  test
 
 
 #------------------------------------------------------------------------------
@@ -115,7 +130,7 @@ PG_PWD          root@@123
 OUTPUT          output.sql
 
 # Base directory where all dumped files must be written
-OUTPUT_DIR      /home/omm/ora2og/root2test/tmp
+OUTPUT_DIR      /home/omm/ora2og
 
 #------------------------------------------------------------------------------
 # POSTGRESQL FEATURE SECTION (Control which PostgreSQL features are available)
@@ -128,12 +143,12 @@ PG_VERSION	9.2
 ```
 - 测试连接
 ```
-cd /home/omm/ora2og/root2test
+cd /home/omm/ora2og
 ora2pg -t SHOW_VERSION -c config/ora2pg.conf
 ```
 - 导出对象结构:生成的迁移报告在 reports目录下
 ```
-cd /home/omm/ora2og/root2test
+cd /home/omm/ora2og
 sh export_schema.sh
 #导出序列
 #ora2pg -p -t SEQUENCE -o sequence.sql -b ./schema/sequences -c ./config/ora2pg.conf
@@ -165,9 +180,6 @@ sh export_schema.sh
 #ora2pg -p -t SYNONYM -o synonym.sql -b ./schema/synonyms -c ./config/ora2pg.conf
 #导出字典
 #ora2pg -p -t DIRECTORY -o directorie.sql -b ./schema/directories -c ./config/ora2pg.conf
-
-#ora2pg -t TABLE -o table.sql -b ./sources/tables -c ./config/ora2pg.conf
-
 ```
 - 导入对象结构至opengauss中  
 修改import_all.sh
@@ -177,7 +189,7 @@ AUTORUN=0
 NAMESPACE=.
 NO_CONSTRAINTS=0
 IMPORT_INDEXES_AFTER=0
-DEBUG=1
+DEBUG=0
 IMPORT_SCHEMA=0
 IMPORT_DATA=0
 IMPORT_CONSTRAINTS=0
@@ -186,14 +198,20 @@ OPENGAUSS=1
 ```
 - 执行导入
 ```
-cd /home/omm/ora2og/root2test
-#此命令会通过交互式按顺序导入表结构索引等。最后导入数据。
-sh import_all.sh -d oraclemode_db -o root -w root@@123 -h 192.168.131.128 -p 15400 -f
+cd /home/omm
+chown -R omm:dbgrp ora2og/
+#使用omm 运行gsql导入对象
+su - omm
+#此命令会通过交互式按顺序导入表结构索引等
+sh import_all.sh -h 192.168.131.128 -p 15400 -o root -w root@@123 -d oraclemode_db -n test -f
+```
+- 导出数据
+```
+ora2pg -p -t DATA -o data.sql -b ./data -c ./config/ora2pg.conf
 ```
 - 导入数据
 ```
-ora2pg -t COPY -o data.sql -b ./data -c ./config/ora2pg.conf
-ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_user root
+ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_schema test --pg_user root
 ```
 
 # 增量迁移
