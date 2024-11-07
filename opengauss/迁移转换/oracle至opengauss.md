@@ -64,62 +64,22 @@ DEBUG           1
 EXPORT_SCHEMA	1
 # Oracle schema/owner to use
 SCHEMA	ROOT
-# Enable/disable the CREATE SCHEMA SQL order at starting of the output file.
-# It is enable by default and concern on TABLE export type.
 CREATE_SCHEMA  0
-# Enable this directive to force Oracle to compile schema before exporting code.
-# When this directive is enabled and SCHEMA is set to a specific schema name, 
-# only invalid objects in this schema will be recompiled. If SCHEMA is not set
-# then all schema will be recompiled. To force recompile invalid object in a
-# specific schema, set COMPILE_SCHEMA to the schema name you want to recompile.
-# This will ask to Oracle to validate the PL/SQL that could have been invalidate
-# after a export/import for example. The 'VALID' or 'INVALID' status applies to
-# functions, procedures, packages and user defined types.
 COMPILE_SCHEMA	1
-# By default if you set EXPORT_SCHEMA to 1 the PostgreSQL search_path will be
-# set to the schema name exported set as value of the SCHEMA directive. You can
-# defined/force the PostgreSQL schema to use by using this directive.
-#
-# The value can be a comma delimited list of schema but not when using TABLE
-# export type because in this case it will generate the CREATE SCHEMA statement
-# and it doesn't support multiple schema name. For example, if you set PG_SCHEMA
-# to something like "user_schema, public", the search path will be set like this
-#        SET search_path = user_schema, public;
-# forcing the use of an other schema (here user_schema) than the one from Oracle
-# schema set in the SCHEMA directive. You can also set the default search_path
-# for the PostgreSQL user you are using to connect to the destination database
-# by using:
-#        ALTER ROLE username SET search_path TO user_schema, public;
-#in this case you don't have to set PG_SCHEMA.
 PG_SCHEME  test
 
 #------------------------------------------------------------------------------
 # OUTPUT SECTION (Control output to file or PostgreSQL database)
 #------------------------------------------------------------------------------
-# Define the following directive to send export directly to a PostgreSQL
-# database, this will disable file output. Note that these directives are only
-# used for data export, other export need to be imported manually through the
-# use og psql or any other PostgreSQL client.
 PG_DSN          dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400
 PG_USER         root
 PG_PWD          root@@123
-
-# By default all output is dump to STDOUT if not send directly to postgresql
-# database (see above). Give a filename to save export to it. If you want
-# a Gzip'd compressed file just add the extension .gz to the filename (you
-# need perl module Compress::Zlib from CPAN). Add extension .bz2 to use Bzip2
-# compression.
 OUTPUT          output.sql
-
-# Base directory where all dumped files must be written
 OUTPUT_DIR      /home/omm/ora2og
 
 #------------------------------------------------------------------------------
 # POSTGRESQL FEATURE SECTION (Control which PostgreSQL features are available)
 #------------------------------------------------------------------------------
-# Set the PostgreSQL major version number of the target database. Ex: 9.6 or 10
-# Default is current major version at time of a new release. This replace the
-# old PG_SUPPORTS_* configuration directives.
 PG_VERSION	9.2
 
 ```
@@ -170,13 +130,12 @@ sh export_schema.sh
 #导出字典
 #ora2pg -p -t DIRECTORY -o directorie.sql -b ./schema/directories -c ./config/ora2pg.conf
 ```
-- 导入对象结构至opengauss中  
-修改import_all.sh
+- 修改import_all.sh 导入参数
 ```
 EXPORT_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
 OPENGAUSS=1
 ```
-- 执行导入结构
+- 执行导入对象
 ```
 cd /home/omm
 chown -R omm:dbgrp ora2og/
