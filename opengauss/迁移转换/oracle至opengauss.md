@@ -166,8 +166,7 @@ sh export_schema.sh
 #导出字典
 #ora2pg -p -t DIRECTORY -o directorie.sql -b ./schema/directories -c ./config/ora2pg.conf
 
-ora2pg -t MVIEW -o mview.sql -b ./sources/mviews -c ./config/ora2pg.conf
-#ora2pg -p -t TABLE -o table.sql -b ./schema/tables -c ./config/ora2pg.conf
+#ora2pg -t TABLE -o table.sql -b ./sources/tables -c ./config/ora2pg.conf
 
 ```
 - 导入对象结构至opengauss中  
