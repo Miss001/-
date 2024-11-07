@@ -48,40 +48,25 @@ vi /home/omm/ora2og/config/ora2pg.conf
 #------------------------------------------------------------------------------
 # INPUT SECTION (Oracle connection or input file)
 #------------------------------------------------------------------------------
-
-# Set this directive to a file containing PL/SQL Oracle Code like function,
-# procedure or a full package body to prevent Ora2Pg from connecting to an
-# Oracle database end just apply his conversion tool to the content of the
-# file. This can only be used with the following export type: PROCEDURE,
-# FUNCTION or PACKAGE. If you don't know what you do don't use this directive.
-#INPUT_FILE     ora_plsql_src.sql
-
 # Set the Oracle home directory
 ORACLE_HOME     /usr/lib/oracle/21/client64
-
 # Set Oracle database connection (datasource, user, password)
 ORACLE_DSN      dbi:Oracle:host=192.168.131.135;sid=helowin;port=1521
 ORACLE_USER     root
 ORACLE_PWD      123456
-
 # Trace all to stderr
 DEBUG           1
-
 
 #------------------------------------------------------------------------------
 # SCHEMA SECTION (Oracle schema to export and use of schema in PostgreSQL)
 #------------------------------------------------------------------------------
-
 # Export Oracle schema to PostgreSQL schema
 EXPORT_SCHEMA	1
-
 # Oracle schema/owner to use
 SCHEMA	ROOT
-
 # Enable/disable the CREATE SCHEMA SQL order at starting of the output file.
 # It is enable by default and concern on TABLE export type.
 CREATE_SCHEMA  0
-
 # Enable this directive to force Oracle to compile schema before exporting code.
 # When this directive is enabled and SCHEMA is set to a specific schema name, 
 # only invalid objects in this schema will be recompiled. If SCHEMA is not set
@@ -91,7 +76,6 @@ CREATE_SCHEMA  0
 # after a export/import for example. The 'VALID' or 'INVALID' status applies to
 # functions, procedures, packages and user defined types.
 COMPILE_SCHEMA	1
-
 # By default if you set EXPORT_SCHEMA to 1 the PostgreSQL search_path will be
 # set to the schema name exported set as value of the SCHEMA directive. You can
 # defined/force the PostgreSQL schema to use by using this directive.
@@ -109,11 +93,9 @@ COMPILE_SCHEMA	1
 #in this case you don't have to set PG_SCHEMA.
 PG_SCHEME  test
 
-
 #------------------------------------------------------------------------------
 # OUTPUT SECTION (Control output to file or PostgreSQL database)
 #------------------------------------------------------------------------------
-
 # Define the following directive to send export directly to a PostgreSQL
 # database, this will disable file output. Note that these directives are only
 # used for data export, other export need to be imported manually through the
@@ -135,11 +117,11 @@ OUTPUT_DIR      /home/omm/ora2og
 #------------------------------------------------------------------------------
 # POSTGRESQL FEATURE SECTION (Control which PostgreSQL features are available)
 #------------------------------------------------------------------------------
-
 # Set the PostgreSQL major version number of the target database. Ex: 9.6 or 10
 # Default is current major version at time of a new release. This replace the
 # old PG_SUPPORTS_* configuration directives.
 PG_VERSION	9.2
+
 ```
 - 测试连接
 ```
