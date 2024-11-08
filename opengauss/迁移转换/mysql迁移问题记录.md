@@ -29,7 +29,7 @@ Caused by: java.lang.StringIndexOutOfBoundsException: begin 0, end -1, length 0
 	... 8 more
 ```
 - 原因  
-  mysql 未开启gtid_mode=on
+  在配置文件中配置binlog name和position,置空gtid.同时mysql 未开启gtid_mode=on。程序读取offset报错
 - 处理
 ```
 #开启gtid
