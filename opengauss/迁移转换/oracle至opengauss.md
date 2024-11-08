@@ -66,7 +66,7 @@ EXPORT_SCHEMA	1
 SCHEMA	ROOT
 CREATE_SCHEMA  0
 COMPILE_SCHEMA	1
-PG_SCHEME  test,public
+#PG_SCHEME  test
 
 #------------------------------------------------------------------------------
 # OUTPUT SECTION (Control output to file or PostgreSQL database)
@@ -95,7 +95,7 @@ vi  export_schema.sh
 EXPORT_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
 SOURCE_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
 ```
-- 导出对象结构:生成的迁移报告在 reports目录下
+- 批量导出对象结构:生成的迁移报告在 reports目录下
 ```
 cd /home/omm/ora2og
 sh export_schema.sh
@@ -135,7 +135,7 @@ sh export_schema.sh
 EXPORT_TYPE="SEQUENCE TABLE VIEW TRIGGER FUNCTION PROCEDURE PARTITION"
 OPENGAUSS=1
 ```
-- 执行导入对象
+- 批量执行导入对象
 ```
 cd /home/omm
 chown -R omm:dbgrp ora2og/
@@ -143,16 +143,41 @@ chown -R omm:dbgrp ora2og/
 su - omm
 #此命令会通过交互式按顺序导入表结构索引等，导入数据需要切换用户执行ora2pg
 sh import_all.sh -h 192.168.131.128 -p 15400 -o root -w root@@123 -d oraclemode_db -n test -f
-# 导入单独的对象
-gsql --single-transaction  -h 192.168.131.128 -p 15400 -U root -W root@@123 -d oraclemode_db -f ./schema/functions/function.sql
 ```
-- 导入数据
+- 批量导入数据
 ```
 ora2pg -c config/ora2pg.conf -t COPY --pg_dsn "dbi:Pg:dbname=oraclemode_db;host=192.168.131.128;port=15400" --pg_schema root --pg_user root
 ```
 
-
-# 增量迁移
+- 单表结构导出至本地文件
 ```
-ora2pg -c ora2pg.conf -t COPY --scn "TO_TIMESTAMP('2021-12-01 00:00:00', 'YYYY-MM-DD HH:MI:SS')"
+ora2pg -c config/ora2pg.conf  -a test -b ./data -o output.sql
+```
+- 单表结构从本地文件导入数据库
+```
+cd /home/omm
+chown -R omm:dbgrp ora2og/
+su - omm
+gsql --single-transaction  -h 192.168.131.128 -p 15400 -U root -W root@@123 -d oraclemode_db -c "SET search_path TO test; \i ./data/output.sql"
+```
+-单表数据导入数据库
+```
+#数据(无法导出成文件)
+ora2pg -t COPY -c config/ora2pg.conf -N test -n root -a test
+```
+# 增量迁移
+原理：通过表时间字段查询至全量迁移后的变更数据
+
+```
+# Support for include a WHERE clause filter when dumping the contents
+# of tables. Value is construct as follow: TABLE_NAME[WHERE_CLAUSE], or
+# if you have only one where clause for each table just put the where
+# clause as value. Both are possible too. Here are some examples:
+#WHERE  1=1	# Apply to all tables
+#WHERE	TABLE_TEST[ID1='001']	# Apply only on table TABLE_TEST
+#WHERE	TABLE_TEST[ID1='001' OR ID1='002] DATE_CREATE > '2001-01-01' TABLE_INFO[NAME='test']
+
+SELECT CURRENT_SCN FROM V$DATABASE;
+
+ora2pg  -t COPY -c config/ora2pg.conf -N test -n root -a test --scn "SYSDATE - 1"
 ```
