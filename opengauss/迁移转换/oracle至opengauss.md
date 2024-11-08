@@ -162,22 +162,26 @@ gsql --single-transaction  -h 192.168.131.128 -p 15400 -U root -W root@@123 -d o
 ```
 -单表数据导入数据库
 ```
-#数据(无法导出成文件)
-ora2pg -t COPY -c config/ora2pg.conf -N test -n root -a test
+#数据(无法导出成文件),-n为oracle的schema,-a 为表名
+ora2pg -t COPY -c config/ora2pg.conf -n root -a test
 ```
 # 增量迁移
-原理：通过表时间字段查询至全量迁移后的变更数据
-
+原理：通过表时间字段查询至全量迁移后的变更数据导入  
+      ora2pg21.1版本不支持通过--scn 增量迁移数据  
+- 修改配置文件
+vi  config/ora2pg.conf
 ```
 # Support for include a WHERE clause filter when dumping the contents
 # of tables. Value is construct as follow: TABLE_NAME[WHERE_CLAUSE], or
 # if you have only one where clause for each table just put the where
 # clause as value. Both are possible too. Here are some examples:
 #WHERE  1=1	# Apply to all tables
-#WHERE	TABLE_TEST[ID1='001']	# Apply only on table TABLE_TEST
+WHERE	test[id>=11]	# Apply only on table TABLE_TEST
 #WHERE	TABLE_TEST[ID1='001' OR ID1='002] DATE_CREATE > '2001-01-01' TABLE_INFO[NAME='test']
-
-SELECT CURRENT_SCN FROM V$DATABASE;
-
-ora2pg  -t COPY -c config/ora2pg.conf -N test -n root -a test --scn "SYSDATE - 1"
+# The last applies two different where clause on tables TABLE_TEST and
+# TABLE_INFO and a generic where clause on DATE_CREATE to all other tables
+```
+- 执行迁移
+```
+ora2pg  -t COPY -c config/ora2pg.conf -n root -a test 
 ```
