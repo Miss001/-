@@ -80,3 +80,4 @@ CREATE DATABASE dbname WITH ENCODING = 'UTF8';
 ```
 # 5.遗留问题
 ## 导入数据时若oracle的schema与opengauss的schema不一致会导致查询表不存在
+## 增量迁移时只能根据表的时间戳字段或指定的增量条件迁移，无法根据scn迁移
