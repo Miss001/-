@@ -162,7 +162,7 @@ chown -R omm:dbgrp ora2og/
 su - omm
 gsql --single-transaction  -h 192.168.131.128 -p 15400 -U root -W root@@123 -d oraclemode_db -c "SET search_path TO test; \i ./data/output.sql"
 ```
--单表数据导入数据库
+- 单表数据导入数据库
 ```
 #数据(无法导出成文件),-n为oracle的schema,-a 为表名
 ora2pg -t COPY -c config/ora2pg.conf -n root -a test
