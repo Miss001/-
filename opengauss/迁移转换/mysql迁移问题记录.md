@@ -77,6 +77,7 @@ enforce-gtid-consistency=on
 2024-11-08 06:24:44.632 672df4fc.5060 mysqlmode_db 139936621655808 PostgreSQL JDBC Driver 0 dn_6001 3F001  0 [BACKEND] STATEMENT:  select t_binlog_name,i_binlog_position,t_gtid_set from sch_chameleon.t_replica_batch
 ```
 - 报错原因
+  执行完`sh gs_mysync.sh start workid`后默认会删除`sch_chameleon`模式
 - 处理
 ## 遗留问题
 ### 未启用gtid时增量迁移失败
