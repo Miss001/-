@@ -412,7 +412,6 @@ cat /home/omm/portal/workspace/2/status/full_migration.txt
 ## 全量迁移-gs_mysync
 - 实现原理：
   使用只读模式，对所有 MySQL 表创建一个完整的快照，将数据一次性复制到 opengauss  
-  迁移完成的位移存储在：`/home/omm/portal/workspace/1/tmp/connect.offsets` 中  
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka
