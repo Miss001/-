@@ -82,6 +82,7 @@ enforce-gtid-consistency=on
 - 报错原因
   执行完`sh gs_mysync.sh start workid`后默认会删除`sch_chameleon`模式
 - 处理
+  手动配置配置文件`/home/omm/portal/workspace/2/config/debezium/mysql-source.properties`
 
 ## 无法处理的问题
 ### 未启用gtid时增量迁移失败
