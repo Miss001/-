@@ -411,7 +411,9 @@ cat /home/omm/portal/workspace/2/status/full_migration.txt
 ```
 ## 全量迁移-gs_mysync
 - 实现原理：
-  使用只读模式，对所有 MySQL 表创建一个完整的快照，将数据一次性复制到 opengauss  
+  使用只读模式，对所有 MySQL 表创建一个完整的快照，将数据一次性复制到 opengauss
+- 迁移日志目录   
+  /home/omm/portal/workspace/2/logs/full_migration.log   
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka
@@ -429,7 +431,9 @@ sh gs_mysync.sh start 1
 - 实现原理：
   debezium mysql connector     
   source端：监控mysql数据库的binlog日志，并将数据（DDL和DML操作）以AVRO格式写入到kafka  
-  sink端：从kafka读取AVRO格式数据（DDL和DML操作），并组装为事务，在openGauss端按照事务粒度并行回放   
+  sink端：从kafka读取AVRO格式数据（DDL和DML操作），并组装为事务，在openGauss端按照事务粒度并行回放
+- 迁移日志目录    
+  /home/omm/portal/workspace/2/logs/debezium/connect_source.log
 前提：启动kafka
 ```
 sh gs_rep_portal.sh start_kafka 1
