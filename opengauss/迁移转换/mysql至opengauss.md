@@ -405,7 +405,10 @@ sh gs_rep_portal.sh start_mysql_incremental_migration 1 &
 #增量校验
 sh gs_rep_portal.sh start_mysql_incremental_migration_datacheck 1 &
 ```
-
+迁移状态信息查看
+```
+cat /home/omm/portal/workspace/2/status/full_migration.txt
+```
 ## 全量迁移-gs_mysync
 - 实现原理：
   使用只读模式，对所有 MySQL 表创建一个完整的快照，将数据一次性复制到 opengauss  
