@@ -63,9 +63,14 @@ enforce-gtid-consistency=on
 2024-11-08 05:12:44.702 672de41b.5060 mysqlmode_db 139936769210112 dn_6001 0 dn_6001 42704  3096224743818601 [BACKEND] ERROR:  role "root@%" does not exist
 ```
 - 报错原因   
-  迁移存储过程视图函数时定义的用户角色不存在   
-- 处理   
-  迁移时不迁移存储过程对象等，修改用户定义DEFINER=`root`或者删除用户定义DEFINER=`root`@`%`后迁移
+  迁移存储过程视图函数时定义的用户角色@语法不兼容   
+- 处理
+```
+1.database中执行：set b_compatibility_user_host_auth to on;
+2.创建用户：create user `root`@`%` with password 'root@@123';
+3.授权：grant all privileges to `root`@`%`;
+```  
+
 ## 遗留问题
 ### 未启用gtid时增量迁移失败
 ### 全量迁移前才开启gtid,全量迁移正常运行,增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss;将表数据全清空,重建表测试后consumer消费正常   
