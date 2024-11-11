@@ -66,6 +66,15 @@ mkdir -p /opt/openGauss/corefile
 ```
 groupadd dbgrp
 useradd -g dbgrp omm
+#将omm 添加为sudo组
+1.设置文件可写
+chmod u+w /etc/sudoers
+2.编辑文件
+vi /etc/sudoers
+#添加
+omm ALL=(ALL) ALL
+3.修改权限
+chmod u-w /etc/sudoers
 ```
 
 ## 创建cluster_config.xml 文件
