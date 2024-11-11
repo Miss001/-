@@ -31,7 +31,7 @@ Caused by: java.lang.StringIndexOutOfBoundsException: begin 0, end -1, length 0
 - 原因  
   在配置文件中配置binlog name和position,gtid为空.同时mysql 未开启gtid_mode=on。程序读取t_gtid_set为空报错
 - 处理
-  设置开启mysql的gtid
+  设置开启mysql的gtid，需要在全量迁移前开启，全量迁移后增量迁移前开始会漏第一个事务
 ```
 #开启gtid
 #查看状态
@@ -82,8 +82,7 @@ enforce-gtid-consistency=on
 - 报错原因
   执行完`sh gs_mysync.sh start workid`后默认会删除`sch_chameleon`模式
 - 处理
-  手动配置配置文件`/home/omm/portal/workspace/2/config/debezium/mysql-source.properties`
+  手动配置配置文件`/home/omm/portal/workspace/2/config/debezium/mysql-source.properties`中的位移参数
 
 ## 无法处理的问题
-### 未启用gtid时增量迁移失败
-### 全量迁移前才开启gtid,全量迁移正常运行,增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss;将表数据全清空,重建表测试后consumer消费正常   
+### 未启用gtid时增量迁移失败   
