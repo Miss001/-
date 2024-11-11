@@ -1,4 +1,4 @@
-## 1.Caused by: java.lang.StringIndexOutOfBoundsException: begin 0, end -1, length 0
+# 1.Caused by: java.lang.StringIndexOutOfBoundsException: begin 0, end -1, length 0
 - 报错信息
 ```
   [2024-11-04 21:40:46,455] ERROR Producer failure (io.debezium.pipeline.ErrorHandler:31)  
@@ -56,6 +56,16 @@ set global gtid_mode=on;
 gtid_mode = on
 enforce-gtid-consistency=on
 ```
+# 2.存储过程视图函数迁移报错：ERROR:  role "root@%" does not exist
+- 报错信息   
+```
+2024-11-08 05:12:43.828 672de41b.5060 mysqlmode_db 139936769210112 dn_6001 0 dn_6001 42704  3096224743818599 [BACKEND] STATEMENT:  CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `test`.`v_tmp1` AS select `test`.`tmp1`.`user_id` AS `user_id`,`test`.`tmp1`.`username` AS `username`,`test`.`tmp1`.`price` AS `price`,`test`.`tmp1`.`createdtime` AS `createdtime` from `test`.`tmp1`
+2024-11-08 05:12:44.702 672de41b.5060 mysqlmode_db 139936769210112 dn_6001 0 dn_6001 42704  3096224743818601 [BACKEND] ERROR:  role "root@%" does not exist
+```
+- 报错原因   
+  迁移存储过程视图函数时定义的用户角色不存在   
+- 处理   
+  迁移时不迁移存储过程对象等，手动删除DEFINER=`root`@`%`后迁移
 ## 遗留问题
 ### 未启用gtid时增量迁移失败
 ### 全量迁移前才开启gtid,全量迁移正常运行,增量迁移时consumer消费时一直无法读取到topic中的数据写入opengauss;将表数据全清空,重建表测试后consumer消费正常   
