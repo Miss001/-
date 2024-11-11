@@ -84,5 +84,5 @@ enforce-gtid-consistency=on
 - 处理
   手动配置配置文件`/home/omm/portal/workspace/2/config/debezium/mysql-source.properties`中的位移参数
 
-## 无法处理的问题
+## 遗留问题
 ### 未启用gtid时增量迁移失败   
