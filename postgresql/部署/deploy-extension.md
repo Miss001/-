@@ -7,6 +7,8 @@ sudo -i -u postgres
 或
 SELECT * FROM pg_available_extensions 
 ```
+### 扩展包路径
+`/opt/postgresql/share/extension`
 
 ### 编译安装指定扩展包
 进入源码编译
