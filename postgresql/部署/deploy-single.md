@@ -19,6 +19,7 @@ cd postgresql-17.0
 make
 sudo make install
 
+# 添加到系统的库搜索路径中
 echo "/opt/postgresql/lib" | sudo tee /etc/ld.so.conf.d/postgresql.conf
 sudo ldconfig
 ```
