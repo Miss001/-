@@ -36,11 +36,11 @@ sudo -i -u postgres
 
 ## 启动数据库
 ```
+切换用户
+sudo -i -u postgres
 创建日志目录
 sudo mkdir -p /opt/postgresql/log
 sudo chown postgres:postgres /opt/postgresql/log
-切换用户
-sudo -i -u postgres
 启动
 /opt/postgresql/bin/pg_ctl -D /opt/postgresql/data -l /opt/postgresql/log/postgresql.log start
 ```
