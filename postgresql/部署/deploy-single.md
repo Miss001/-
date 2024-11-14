@@ -7,7 +7,7 @@
 ```
 sudo yum update -y
 sudo yum groupinstall -y "Development Tools"
-sudo yum install -y readline-devel zlib-devel libxml2-devel libxslt-devel uuid-devel gcc-c++ openssl-devel flex bison libcurl-devel libicu-devel
+sudo yum install -y readline-devel zlib-devel libxml2-devel libxslt-devel uuid-devel gcc-c++ openssl-devel flex bison libcurl-devel libicu-devel 
 ```
 
 ## 编译
@@ -15,7 +15,7 @@ sudo yum install -y readline-devel zlib-devel libxml2-devel libxslt-devel uuid-d
 sudo mkdir /opt/postgresql
 tar -xvf postgresql-17.0.tar.gz
 cd postgresql-17.0
-./configure --prefix=/opt/postgresql --with-libxml --with-libxslt --with-uuid=ossp  #若无icu 可增加 --without-icu
+./configure --prefix=/opt/postgresql --with-libxml --with-libxslt --with-uuid=ossp #若无icu 可增加 --without-icu
 make
 sudo make install
 ```
