@@ -15,12 +15,6 @@ cd /opt/postgresql-17.0/contrib/uuid-ossp
 make & make install
 ```
 
-### 指定扩展包路径
-vi /opt/postgresql/data/postgresql.conf
-```
-dynamic_library_path = '/opt/postgresql/share/extension'
-```
-
 ### 重启加载扩展包
 ```
 重启
