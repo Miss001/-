@@ -18,6 +18,9 @@ cd postgresql-17.0
 ./configure --prefix=/opt/postgresql --with-libxml --with-libxslt --with-uuid=ossp #若无icu 可增加 --without-icu
 make
 sudo make install
+
+echo "/opt/postgresql/lib" | sudo tee /etc/ld.so.conf.d/postgresql.conf
+sudo ldconfig
 ```
 
 ## 创建用户组
