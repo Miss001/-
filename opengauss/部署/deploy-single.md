@@ -31,6 +31,7 @@ sudo yum install openssl-devel bzip2-devel readline-devel sqlite-devel libffi-de
 make 
 make install
 
+cp /opt/Python-3.9.20/libpython3.9.so.1.0 /opt/Python-3.9.20//libpython3.9.so /usr/lib64/
 ln -s /opt/miniconda3/envs/myenv/bin/python3.9 /opt/miniconda3/envs/myenv/bin/python
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
