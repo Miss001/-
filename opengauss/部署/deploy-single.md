@@ -85,6 +85,15 @@ chmod u-w /etc/sudoers
 chown -R omm:dbgrp /opt/openGauss
 chown -R omm:dbgrp /opt/openGausssource
 ```
+# 配置omm用户的python环境
+```
+#配置默认加载环境
+vi ~/.bashrc
+# <<< conda initialize <<<
+conda activate myenv
+#应用环境变量
+source ~/.bashrc
+```
 
 ## 创建cluster_config.xml 文件
 ```
