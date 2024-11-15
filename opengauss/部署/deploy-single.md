@@ -42,7 +42,7 @@ conda activate myenv
 
 ## 安装依赖
 ```
-yum install python3-devel libltdl*
+yum install python3-devel libltdl* expect
 ```
 
 ## 安装
