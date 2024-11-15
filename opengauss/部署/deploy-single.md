@@ -20,7 +20,7 @@ sh Miniconda3-latest-Linux-x86_64.sh
 
 添加环境变量
 export CONDA_HOME=/opt/miniconda3
-export PATH=${CONDA_HOME}/bin:$PATH
+export PATH=/opt/miniconda3/envs/myenv/bin:$PATH
 
 编译并创建python环境
 tar -xf Python-3.9.20.tar.xz 
