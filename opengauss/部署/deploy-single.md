@@ -29,7 +29,7 @@ sudo yum groupinstall "Development Tools"
 sudo yum install openssl-devel bzip2-devel readline-devel sqlite-devel libffi-devel zlib-devel
 ./configure --enable-shared --prefix=/opt/miniconda3/envs/myenv
 make 
-make altinstall
+make install
 
 ln -s /opt/miniconda3/envs/myenv/bin/python3.9 /opt/miniconda3/envs/myenv/bin/python
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
