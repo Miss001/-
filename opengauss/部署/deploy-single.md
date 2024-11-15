@@ -128,6 +128,7 @@ chmod u-w /etc/sudoers
 ```
 ## 校验安装环境
 ```
+cd /opt/openGausssource/script
 ./gs_preinstall -U omm -G dbgrp -L -X /opt/openGausssource/cluster_config.xml
 ```
 
