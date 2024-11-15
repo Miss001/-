@@ -62,6 +62,7 @@ mkdir -p /opt/openGauss/tmp
 mkdir -p /opt/openGauss/install/om
 mkdir -p /opt/openGauss/corefile
 
+chown -R omm:dbgrp openGauss
 ```
 ## 创建用户组
 ```
