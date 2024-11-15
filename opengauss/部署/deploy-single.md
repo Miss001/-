@@ -67,6 +67,7 @@ mkdir -p /opt/openGauss/corefile
 ```
 groupadd dbgrp
 useradd -g dbgrp omm
+passwd omm
 #将omm 添加为sudo组
 1.设置文件可写
 chmod u+w /etc/sudoers
