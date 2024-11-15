@@ -36,8 +36,12 @@ ln -s /opt/miniconda3/envs/myenv/bin/python3.9 /opt/miniconda3/envs/myenv/bin/py
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 conda create --name myenv
-source ~/.bashrc
+#配置默认加载环境
+vi ~/.bashrc
+# <<< conda initialize <<<
 conda activate myenv
+#应用环境变量
+source ~/.bashrc
 ```
 
 ## 安装依赖
