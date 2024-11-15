@@ -62,7 +62,6 @@ mkdir -p /opt/openGauss/tmp
 mkdir -p /opt/openGauss/install/om
 mkdir -p /opt/openGauss/corefile
 
-chown -R omm:dbgrp openGauss
 ```
 ## 创建用户组
 ```
@@ -78,6 +77,9 @@ vi /etc/sudoers
 omm ALL=(ALL) ALL
 3.修改权限
 chmod u-w /etc/sudoers
+
+chown -R omm:dbgrp /opt/openGauss
+chown -R omm:dbgrp /opt/openGausssource
 ```
 
 ## 创建cluster_config.xml 文件
