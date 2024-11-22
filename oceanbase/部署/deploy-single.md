@@ -24,6 +24,9 @@ OAT is ready for visit
 url is: http://<current_ip>:7000
 user/password is: admin/aaAA11__
 
-# 访问 http://192.168.131.30:7000 修改密码
-Test@123
+# 访问 http://192.168.131.30:7000 修改密码 Test@123
+# 图形界面安装
+
 ```
+
+### 
