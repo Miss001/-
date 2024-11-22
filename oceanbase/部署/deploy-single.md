@@ -5,3 +5,8 @@ cpu:2 core
 
 # 环境准备
 echo never > /sys/kernel/mm/redhat_transparent_hugepage/enabled
+
+# docker 安装
+```
+
+```
