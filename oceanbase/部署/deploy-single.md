@@ -55,8 +55,8 @@ for t in {clog,etc2};do ln -s /data/log1/obdemo/$t /home/admin/oceanbase/store/o
 su - admin
 cd /home/admin/oceanbase 
 /home/admin/oceanbase/bin/observer \
--i 192.168.1.100 \
--p 3306 \
+-i ens160 \
+-p 2881 \
 -P 2882 \
 -z zone1 \
 -d /home/admin/oceanbase/store/obdemo \
