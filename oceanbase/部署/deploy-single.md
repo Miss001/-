@@ -27,6 +27,7 @@ url is: http://<current_ip>:7000
 user/password is: admin/aaAA11__
 
 # 访问 http://192.168.131.30:7000 修改密码 Test@123
+# 添加服务器初始化
 ```
 
 ### 通过命令行安装
