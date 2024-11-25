@@ -2,7 +2,7 @@
 内存：8G     
 cpu: 2 core     
 磁盘：80GB    /      
-      30GB   /data/1     
+      100GB   /data/1     
       40GB   /data/log1     
 系统：CentOS Linux release 7.9.2009 (Core)
 
@@ -66,6 +66,18 @@ cd /home/admin/oceanbase
 -n obdemo \
 -c 10001 \
 -o "system_memory=16G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
+
+
+/home/admin/oceanbase/bin/observer \
+-i ens160 \
+-p 2881 \
+-P 2882 \
+-z zone1 \
+-d /home/admin/oceanbase/store/obdemo \
+-l DEBUG \
+-n obdemo \
+-c 10001 \
+-o "system_memory=16G,datafile_size=70G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
 ```
 
 ## 安装客户端
