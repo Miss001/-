@@ -63,21 +63,10 @@ cd /home/admin/oceanbase
 -z zone1 \
 -d /home/admin/oceanbase/store/obdemo \
 -l DEBUG \
--n obdemo \
 -c 10001 \
--o "system_memory=16G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
-
-
-/home/admin/oceanbase/bin/observer \
--i ens160 \
--p 2881 \
--P 2882 \
--z zone1 \
--d /home/admin/oceanbase/store/obdemo \
--l DEBUG \
 -n obdemo \
--c 10001 \
--o "system_memory=16G,datafile_size=70G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
+-r '192.168.131.100:2882:2881' \
+-o "system_memory=16G,datafile_size=100G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
 ```
 
 ## 安装客户端
