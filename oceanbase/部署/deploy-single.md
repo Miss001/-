@@ -38,5 +38,22 @@ user/password is: admin/aaAA11__
 ### 安装
 ```
 rpm -ivh oceanbase-3.2.4.1-101000052023010822.el7.x86_64.rpm
+
+# 默认安装路径 /home/admin/oceanbase
+```
+### 初始化
+```
+# 数据目录准备
+su - admin
+mkdir -p /data/1/obdemo/{etc3,sstable,slog}
+mkdir -p /data/log1/obdemo/{clog,etc2}
+mkdir -p /home/admin/oceanbase/store/obdemo
+for t in {etc3,sstable,slog};do ln -s /data/1/obdemo/$t /home/admin/oceanbase/store/obdemo/$t; done
+for t in {clog,etc2};do ln -s /data/log1/obdemo/$t /home/admin/oceanbase/store/obdemo/$t; done
+
+#启动服务
+su - admin
+cd /home/admin/oceanbase 
+/home/admin/oceanbase/bin/observer -i 192.168.131.100 -P 2882 -p 2881 -z zone1 -d /home/admin/oceanbase/store/obdemo -r '192.168.131.100:2882:2881' -c 10001 -n obdemo -o "system_memory=16G,datafile_size=40G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
 ```
 
