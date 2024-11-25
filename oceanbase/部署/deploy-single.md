@@ -30,7 +30,12 @@ user/password is: admin/aaAA11__
 # 添加服务器初始化
 ```
 
-### 通过命令行安装
+## 安装oceanbase
+### 下载安装包
+地址：https://www.oceanbase.com/softwarecenter-enterprise      
+![1732522441985](https://github.com/user-attachments/assets/e26d3572-692d-4204-8d84-6f6df41e30bd)
+
+### 安装
 ```
 rpm -ivh oceanbase-3.2.4.1-101000052023010822.el7.x86_64.rpm
 ```
