@@ -2,8 +2,8 @@
 内存：8G     
 cpu: 2 core     
 磁盘：80GB    /      
-      20GB   /data/1     
-      20GB   /data/log1     
+      30GB   /data/1     
+      30GB   /data/log1     
 系统：CentOS Linux release 7.9.2009 (Core)
 
 # 环境准备
