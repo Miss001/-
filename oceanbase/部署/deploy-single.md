@@ -54,6 +54,15 @@ for t in {clog,etc2};do ln -s /data/log1/obdemo/$t /home/admin/oceanbase/store/o
 #启动服务
 su - admin
 cd /home/admin/oceanbase 
-/home/admin/oceanbase/bin/observer -i 192.168.131.100 -P 2882 -p 2881 -z zone1 -d /home/admin/oceanbase/store/obdemo -r '192.168.131.100:2882:2881' -c 10001 -n obdemo -o "system_memory=16G,datafile_size=40G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
+/home/admin/oceanbase/bin/observer \
+-i 192.168.1.100 \
+-p 3306 \
+-P 2882 \
+-z zone1 \
+-d /home/admin/oceanbase/store/obdemo \
+-l DEBUG \
+-n obdemo \
+-c 10001 \
+-o "system_memory=16G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
 ```
 
