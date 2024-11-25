@@ -27,8 +27,10 @@ url is: http://<current_ip>:7000
 user/password is: admin/aaAA11__
 
 # 访问 http://192.168.131.30:7000 修改密码 Test@123
-# 图形界面安装
-
 ```
 
-### 
+### 通过命令行安装
+```
+rpm -ivh oceanbase-3.2.4.1-101000052023010822.el7.x86_64.rpm
+```
+
