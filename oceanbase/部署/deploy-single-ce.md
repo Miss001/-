@@ -3,7 +3,7 @@
 ## 机器配置
 内存：10G     
 cpu： 4 core     
-磁盘：50GB    /        
+磁盘：70GB    /        
 系统：CentOS Linux release 7.9.2009 (Core)
 
 ## 环境准备
@@ -41,7 +41,9 @@ please open http://127.0.0.1:8680
 # 访问 http://192.168.131.110:8680
 # 添加集群部署
 ```
-![1732587580343](https://github.com/user-attachments/assets/b48bb761-ee69-4002-b1a3-872c8ba871ba)
-![1732587615494](https://github.com/user-attachments/assets/903d1c69-dea7-4bab-a6c0-cc214b7fc237)
-![1732587643386](https://github.com/user-attachments/assets/e6a7e44b-f5f7-436f-9ce6-b59a2673c13c)
-![1732587666056](https://github.com/user-attachments/assets/c4c02043-173f-47da-a285-71c8aaf042b1)
+![1732591451378](https://github.com/user-attachments/assets/aec74ceb-2adb-45d3-aa98-28416ec09f22)
+![1732591485056](https://github.com/user-attachments/assets/f9ba639c-ff25-4cb0-938f-09dc57463e14)
+![1732591515865](https://github.com/user-attachments/assets/6850836e-c36a-405d-86f5-38c873d8515a)
+![1732591592650](https://github.com/user-attachments/assets/149c7dff-a7e9-4e3e-bd2d-382ef2e3b015)
+![image](https://github.com/user-attachments/assets/5258d23d-7723-4a1a-be39-df3c54e3291f)
+![1732591652471](https://github.com/user-attachments/assets/43d1db1c-acd8-4dee-8a09-36e0cce0190f)
