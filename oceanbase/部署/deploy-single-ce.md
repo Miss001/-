@@ -14,7 +14,7 @@ cpu： 4 core
 
 ### 下载安装包    
 地址：[https://www.oceanbase.com/softwarecenter-enterprise](https://www.oceanbase.com/softwarecenter)     
-![1732585501757](https://github.com/user-attachments/assets/34b6e797-3c75-4fc1-9e02-c339c46cd738)
+![1732585906433](https://github.com/user-attachments/assets/4c3393eb-4622-4b1d-84df-047db85d4122)
 
 
 ### 解压安装
