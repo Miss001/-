@@ -48,3 +48,6 @@ please open http://127.0.0.1:8680
 ![1732591592650](https://github.com/user-attachments/assets/149c7dff-a7e9-4e3e-bd2d-382ef2e3b015)
 ![image](https://github.com/user-attachments/assets/5258d23d-7723-4a1a-be39-df3c54e3291f)
 ![1732591652471](https://github.com/user-attachments/assets/43d1db1c-acd8-4dee-8a09-36e0cce0190f)
+
+### 账号信息
+![1732592015075](https://github.com/user-attachments/assets/67ff7f90-b6a0-4636-a49f-5f9e326a01f1)
