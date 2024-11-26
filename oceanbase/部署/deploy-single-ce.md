@@ -1,7 +1,7 @@
 # 社区版部署
 
 ## 机器配置
-内存：10G     
+内存：11G     
 cpu： 4 core     
 磁盘：70GB    /        
 系统：CentOS Linux release 7.9.2009 (Core)
