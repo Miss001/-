@@ -11,10 +11,9 @@ cpu： 4 core
 ```
 echo -e "* soft nofile 20000\n* hard nofile 20000" >> /etc/security/limits.d/nofile.conf
 echo -e "* soft nproc 120000\n* hard nproc 120000" >> /etc/security/limits.d/nproc.conf
-- 安装java
+- 安装java  
 ```
 sudo yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
-```
 ```
 ## 安装OBD
 
