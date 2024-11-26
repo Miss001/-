@@ -2,7 +2,7 @@
 
 ## 机器配置
 内存：10G     
-cpu: 4 core     
+cpu： 4 core     
 磁盘：30GB    /        
 系统：CentOS Linux release 7.9.2009 (Core)
 
