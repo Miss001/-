@@ -1,4 +1,4 @@
-# 企业版
+# 企业版-资源不足安装失败
 ## 机器配置
 内存：8G     
 cpu: 2 core     
@@ -7,11 +7,11 @@ cpu: 2 core
       40GB   /data/log1     
 系统：CentOS Linux release 7.9.2009 (Core)
 
-# 环境准备
+## 环境准备
 - 安装docker   
   参考 https://github.com/Miss001/docker/blob/main/%E9%83%A8%E7%BD%B2/deploy-centos7.9.md
   
-# 安装OAT
+## 安装OAT
 
 ### 下载安装包    
 地址：https://www.oceanbase.com/softwarecenter-enterprise     
