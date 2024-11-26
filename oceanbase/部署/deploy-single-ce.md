@@ -11,10 +11,12 @@ cpu： 4 core
 ```
 echo -e "* soft nofile 20000\n* hard nofile 20000" >> /etc/security/limits.d/nofile.conf
 echo -e "* soft nproc 120000\n* hard nproc 120000" >> /etc/security/limits.d/nproc.conf
+```
 - 安装java  
 ```
 sudo yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
 ```
+
 ## 安装OBD
 
 ### 下载安装包    
@@ -38,8 +40,8 @@ start OBD WEB in 0.0.0.0:8680
 please open http://127.0.0.1:8680
 
 # 访问 http://192.168.131.110:8680
-# 添加集群部署
 ```
+### obd添加集群部署
 ![1732591451378](https://github.com/user-attachments/assets/aec74ceb-2adb-45d3-aa98-28416ec09f22)
 ![1732591485056](https://github.com/user-attachments/assets/f9ba639c-ff25-4cb0-938f-09dc57463e14)
 ![1732591515865](https://github.com/user-attachments/assets/6850836e-c36a-405d-86f5-38c873d8515a)
