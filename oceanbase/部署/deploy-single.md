@@ -1,10 +1,11 @@
-# 企业版-资源不足安装失败
+# 企业版
+资源不足安装失败
 ## 机器配置
-内存：8G     
-cpu: 2 core     
-磁盘：80GB    /      
-      100GB   /data/1     
-      40GB   /data/log1     
+内存：16G     
+cpu : 4c     
+磁盘：70GB    /      
+      20GB   /data/1     
+      50GB   /data/log1     
 系统：CentOS Linux release 7.9.2009 (Core)
 
 ## 环境准备
@@ -28,7 +29,7 @@ OAT is ready for visit
 url is: http://<current_ip>:7000
 user/password is: admin/aaAA11__
 
-# 访问 http://192.168.131.30:7000 修改密码 Test@123
+# 访问 http://192.168.131.120:7000 修改密码 Test@123
 # 添加服务器初始化
 ```
 
@@ -48,11 +49,11 @@ rpm -ivh oceanbase-3.2.4.1-101000052023010822.el7.x86_64.rpm
 ```
 # 数据目录准备
 su - admin
-mkdir -p /data/1/obdemo/{etc3,sstable,slog}
-mkdir -p /data/log1/obdemo/{clog,etc2}
-mkdir -p /home/admin/oceanbase/store/obdemo
-for t in {etc3,sstable,slog};do ln -s /data/1/obdemo/$t /home/admin/oceanbase/store/obdemo/$t; done
-for t in {clog,etc2};do ln -s /data/log1/obdemo/$t /home/admin/oceanbase/store/obdemo/$t; done
+mkdir -p /data/1/{etc3,sstable,slog}
+mkdir -p /data/log1/{clog,etc2}
+mkdir -p /home/admin/oceanbase/store
+for t in {etc3,sstable,slog};do ln -s /data/1/$t /home/admin/oceanbase/store/$t; done
+for t in {clog,etc2};do ln -s /data/log1/$t /home/admin/oceanbase/store/$t; done
 
 #启动服务
 su - admin
@@ -62,12 +63,12 @@ cd /home/admin/oceanbase
 -p 2881 \
 -P 2882 \
 -z zone1 \
--d /home/admin/oceanbase/store/obdemo \
+-d /home/admin/oceanbase/store \
 -l DEBUG \
 -c 10001 \
--n obdemo \
--r '192.168.131.100:2882:2881' \
--o "system_memory=16G,datafile_size=100G,config_additional_dir=/data/1/obdemo/etc3;/data/log1/obdemo/etc2"
+-n cluster \
+-r '192.168.131.120:2882:2881' \
+-o "system_memory=16G,datafile_size=20G,config_additional_dir=/data/1/etc3;/data/log1/etc2"
 ```
 
 ## 安装客户端
