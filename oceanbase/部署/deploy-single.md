@@ -2,7 +2,7 @@
 资源不足安装失败
 ## 机器配置
 内存：16G     
-cpu : 4c     
+cpu ：4c     
 磁盘：70GB    /      
       20GB   /data/1     
       50GB   /data/log1     
