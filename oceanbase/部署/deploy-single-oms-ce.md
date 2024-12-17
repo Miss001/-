@@ -34,11 +34,6 @@ cm_location: 100
 cm_is_default: true
 cm_nodes:
  - xxx.xxx.xxx.2
-tsdb_service: 'INFLUXDB'
-tsdb_enabled: true
-tsdb_url: 'xxx.xxx.xxx.4:8086'
-tsdb_username: username
-tsdb_password: 123****
 
 ```
 ## 部署
