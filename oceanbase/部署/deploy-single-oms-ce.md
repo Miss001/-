@@ -8,6 +8,11 @@
 ## 加载镜像
 ```
 docker load -i oms_4.2.7-ce.tar.gz
+
+#创建目录 mkdir -p
+/data/oms/oms_logs
+/data/oms/oms_store
+/data/oms/oms_run
 ```
 
 ## oms配置文件
@@ -17,20 +22,15 @@ oms_meta_host: xxx.xxx.xxx.1
 oms_meta_port: 2883
 oms_meta_user: root@oms****
 oms_meta_password: oms
+
 # OMS 社区版部署时会在元信息库中创建出这三个数据库
 drc_rm_db: oms_rm
 drc_cm_db: oms_cm
 drc_cm_heartbeat_db: oms_cm_heartbeat
-# 用于消费 OceanBase 增量的用户
-# 当需要从 OceanBase 社区版消费增量日志时，请在 sys 租户下创建用户
-# drc user 需要在待迁移的 OceanBase 集群 sys 租户下创建，然后在 OMS 社区版 yaml 文件中指定
-drc_user: drc_user_name
-drc_password: 'Ocean****'
+
 # OMS 社区版集群配置
 cm_url: http://xxx.xxx.xxx.2:8088
 cm_location: 100
-cm_region: cn-anhui
-cm_region_cn: 安徽
 cm_is_default: true
 cm_nodes:
  - xxx.xxx.xxx.2
@@ -39,6 +39,7 @@ tsdb_enabled: true
 tsdb_url: 'xxx.xxx.xxx.4:8086'
 tsdb_username: username
 tsdb_password: 123****
+
 ```
 ## 部署
 ```
