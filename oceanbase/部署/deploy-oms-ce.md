@@ -1,7 +1,8 @@
 # oms安装
 前提：安装docker
 ## 下载
-链接：https://www.oceanbase.com/softwarecenter?_gl=1*6pns1g*_ga*MjIxODU1OTA3LjE3Mjg0MzkzNDg.*_ga_T35KTM57DZ*MTczNDQxMzY5OS41NC4xLjE3MzQ0MTQ1ODQuNjAuMC4w
+链接：https://www.oceanbase.com/softwarecenter?_gl=1*6pns1g*_ga*MjIxODU1OTA3LjE3Mjg0MzkzNDg.*_ga_T35KTM57DZ*MTczNDQxMzY5OS41NC4xLjE3MzQ0MTQ1ODQuNjAuMC4w    
+
 ![1734414666090](https://github.com/user-attachments/assets/9b9dd37f-cf43-46ee-a8b6-e564ac2910fb)
 
 ## 加载镜像
@@ -38,4 +39,18 @@ tsdb_enabled: true
 tsdb_url: 'xxx.xxx.xxx.4:8086'
 tsdb_username: username
 tsdb_password: 123****
+```
+## 部署
+```
+docker run -dit --net host \
+-v /data/config.yaml:/home/admin/conf/config.yaml \
+-v /data/oms/oms_logs:/home/admin/logs \
+-v /data/oms/oms_store:/home/ds/store \
+-v /data/oms/oms_run:/home/ds/run \
+-e OMS_HOST_IP=${OMS_HOST_IP} \
+--privileged=true \
+--pids-limit -1 \
+--ulimit nproc=65535:65535 \
+--name ${CONTAINER_NAME} \
+work.oceanbase-dev.com/obartifact-store/oms:${IMAGE_TAG}   
 ```
