@@ -38,7 +38,7 @@ cm_nodes:
 ```
 ## 部署
 ```
-docker run -dit --net host \
+docker run -dit \
 -v /data/config.yaml:/home/admin/conf/config.yaml \
 -v /data/oms/oms_logs:/home/admin/logs \
 -v /data/oms/oms_store:/home/ds/store \
@@ -48,5 +48,5 @@ docker run -dit --net host \
 --pids-limit -1 \
 --ulimit nproc=65535:65535 \
 --name ${CONTAINER_NAME} \
-work.oceanbase-dev.com/obartifact-store/oms:${IMAGE_TAG}   
+${REPOSITORY}:${IMAGE_TAG}   
 ```
