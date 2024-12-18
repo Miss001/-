@@ -50,3 +50,8 @@ docker run -dit \
 --name ${CONTAINER_NAME} \
 ${REPOSITORY}:${IMAGE_TAG}   
 ```
+## 初始化oms
+```
+docker exec -it ${CONTAINER_NAME} bash
+bash /root/docker_init.sh
+```
