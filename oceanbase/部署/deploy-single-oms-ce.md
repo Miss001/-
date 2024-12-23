@@ -10,18 +10,19 @@
 docker load -i oms_4.2.7-ce.tar.gz
 
 #创建目录 mkdir -p
-/data/oms/oms_logs
-/data/oms/oms_store
-/data/oms/oms_run
+/opt/oms/oms_logs
+/opt/oms/oms_store
+/opt/oms/oms_run
 ```
 
 ## oms配置文件
+vi /opt/oms/config.yaml
 ```
 # 您需要提前准备一个 OceanBase 数据库，用于存放 OMS 社区版的元信息
-oms_meta_host: xxx.xxx.xxx.1
-oms_meta_port: 2883
-oms_meta_user: root@oms****
-oms_meta_password: oms
+oms_meta_host: 192.168.131.130
+oms_meta_port: 2881
+oms_meta_user: root@test01
+oms_meta_password: Test@123
 
 # OMS 社区版部署时会在元信息库中创建出这三个数据库
 drc_rm_db: oms_rm
@@ -29,29 +30,36 @@ drc_cm_db: oms_cm
 drc_cm_heartbeat_db: oms_cm_heartbeat
 
 # OMS 社区版集群配置
-cm_url: http://xxx.xxx.xxx.2:8088
+cm_url: http://192.168.131.130:18089
 cm_location: 100
 cm_is_default: true
 cm_nodes:
- - xxx.xxx.xxx.2
+ - 192.168.131.130
+
+# 端口配置
+nginx_server_port: 18089
+cm_server_port: 18088
+supervisor_server_port: 19000
+ssh_server_port: 2023
+ghana_server_port: 18090
 
 ```
 ## 部署
 ```
 docker run -dit \
--v /data/config.yaml:/home/admin/conf/config.yaml \
--v /data/oms/oms_logs:/home/admin/logs \
--v /data/oms/oms_store:/home/ds/store \
--v /data/oms/oms_run:/home/ds/run \
+-v /opt/oms/config.yaml:/home/admin/conf/config.yaml \
+-v /opt/oms/oms_logs:/home/admin/logs \
+-v /opt/oms/oms_store:/home/ds/store \
+-v /opt/oms/oms_run:/home/ds/run \
 -e OMS_HOST_IP=${OMS_HOST_IP} \
 --privileged=true \
 --pids-limit -1 \
 --ulimit nproc=65535:65535 \
---name ${CONTAINER_NAME} \
-${REPOSITORY}:${IMAGE_TAG}   
+--name oms \
+reg.docker.alibab-inc.com/oceanbase/oms:feature_4.2.7_ce   
 ```
 ## 初始化oms
 ```
-docker exec -it ${CONTAINER_NAME} bash
+docker exec -it oms bash
 bash /root/docker_init.sh
 ```
