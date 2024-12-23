@@ -30,7 +30,7 @@ drc_cm_db: oms_cm
 drc_cm_heartbeat_db: oms_cm_heartbeat
 
 # OMS 社区版集群配置
-cm_url: http://192.168.131.130:18089
+cm_url: http://192.168.131.130:18088
 cm_location: 100
 cm_is_default: true
 cm_nodes:
@@ -46,7 +46,7 @@ ghana_server_port: 18090
 ```
 ## 部署
 ```
-docker run -dit -m 8G\
+docker run -dit -m 8G --net host\
 -v /opt/oms/config.yaml:/home/admin/conf/config.yaml \
 -v /opt/oms/oms_logs:/home/admin/logs \
 -v /opt/oms/oms_store:/home/ds/store \
