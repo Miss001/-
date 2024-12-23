@@ -22,7 +22,7 @@ vi /opt/oms/config.yaml
 oms_meta_host: 192.168.131.130
 oms_meta_port: 2881
 oms_meta_user: root@test01
-oms_meta_password: Test@123
+oms_meta_password: TEst**123
 
 # OMS 社区版部署时会在元信息库中创建出这三个数据库
 drc_rm_db: oms_rm
@@ -46,17 +46,17 @@ ghana_server_port: 18090
 ```
 ## 部署
 ```
-docker run -dit \
+docker run -dit -m 8G\
 -v /opt/oms/config.yaml:/home/admin/conf/config.yaml \
 -v /opt/oms/oms_logs:/home/admin/logs \
 -v /opt/oms/oms_store:/home/ds/store \
 -v /opt/oms/oms_run:/home/ds/run \
--e OMS_HOST_IP=${OMS_HOST_IP} \
+-e OMS_HOST_IP=192.168.131.130 \
 --privileged=true \
 --pids-limit -1 \
 --ulimit nproc=65535:65535 \
 --name oms \
-reg.docker.alibab-inc.com/oceanbase/oms:feature_4.2.7_ce   
+reg.docker.alibaba-inc.com/oceanbase/oms:feature_4.2.7_ce   
 ```
 ## 初始化oms
 ```
