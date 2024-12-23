@@ -19,7 +19,7 @@ docker load -i oms_4.2.7-ce.tar.gz
 vi /opt/oms/config.yaml
 ```
 # 您需要提前准备一个 OceanBase 数据库，用于存放 OMS 社区版的元信息
-oms_meta_host: 192.168.131.130
+oms_meta_host: 192.168.131.80
 oms_meta_port: 2881
 oms_meta_user: root@test01
 oms_meta_password: TEst**123
@@ -30,11 +30,11 @@ drc_cm_db: oms_cm
 drc_cm_heartbeat_db: oms_cm_heartbeat
 
 # OMS 社区版集群配置
-cm_url: http://192.168.131.130:18088
+cm_url: http://192.168.131.80:18088
 cm_location: 100
 cm_is_default: true
 cm_nodes:
- - 192.168.131.130
+ - 192.168.131.80
 
 # 端口配置
 nginx_server_port: 18089
@@ -51,7 +51,7 @@ docker run -dit -m 8G --net host\
 -v /opt/oms/oms_logs:/home/admin/logs \
 -v /opt/oms/oms_store:/home/ds/store \
 -v /opt/oms/oms_run:/home/ds/run \
--e OMS_HOST_IP=192.168.131.130 \
+-e OMS_HOST_IP=192.168.131.80 \
 --privileged=true \
 --pids-limit -1 \
 --ulimit nproc=65535:65535 \
